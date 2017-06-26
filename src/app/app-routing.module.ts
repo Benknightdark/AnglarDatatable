@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { JquerydatatableComponent } from './jquerydatatable/jquerydatatable.component';
+import { SmarttableComponent } from './smarttable/smarttable.component';
 
 const routes: Routes = [
   {
-    path: '',
-    children: []
+    path: 'datatable',
+    component:JquerydatatableComponent
+
+  },
+    {
+    path: 'smarttable',
+    component:SmarttableComponent
+
   }
 ];
 
