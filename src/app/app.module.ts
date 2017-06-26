@@ -9,6 +9,7 @@ import { SmarttableComponent } from './smarttable/smarttable.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CustomtableComponent } from './customtable/customtable.component';
 import { RouterModule } from '@angular/router';
+import { UserdataService } from './services/userdata.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,7 @@ import { RouterModule } from '@angular/router';
         Ng2SmartTableModule
 
   ],
-  providers: [],
+  providers: [UserdataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

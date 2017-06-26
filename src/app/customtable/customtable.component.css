@@ -1,1 +1,20 @@
-i{ vertical-align: middle !important; }
+.TableScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+table {
+  overflow-x: auto;
+  outline: none!important;
+  overflow-y: auto;
+}
+
+table td {
+  white-space: nowrap;
+  word-break: break-all;
+  /* Renamed property in CSS3 draft spec */
+}
+
+i {
+  vertical-align: middle !important;
+}
