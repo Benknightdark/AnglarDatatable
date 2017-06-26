@@ -16,6 +16,8 @@ export class JquerydatatableComponent{
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.dtOptions = {
+      displayStart: 1,
+      //pageLength:2,
       autoWidth: true,
       ordering: true,
       paging: true,
@@ -23,6 +25,9 @@ export class JquerydatatableComponent{
       pagingType: 'full_numbers',
       lengthChange: true,
       stateSave: true,
+      serverSide:true,
+      deferLoading:10,
+
       columns: [{
         title: 'ID',
         data: 'id'
@@ -37,6 +42,7 @@ export class JquerydatatableComponent{
     this.http.get('http://localhost:3000/data')
       .map(this.extractData)
       .subscribe(persons => {
+        console.log(localStorage.getItem("DataTables_DataTables_Table_0_/datatable"))
         // console.log(persons)
         this.persons = persons;
         // Calling the DT trigger to manually render the table
@@ -47,7 +53,8 @@ export class JquerydatatableComponent{
   }
   private extractData(res: Response) {
     console.log(res.json())
-    const body = res.json();
-    return body || {};
+    const body = res.json()[0];
+    return body.data || {};
   }
+
 }

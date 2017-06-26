@@ -7,16 +7,20 @@ import { DataTablesModule } from 'angular-datatables';
 import { JquerydatatableComponent } from './jquerydatatable/jquerydatatable.component';
 import { SmarttableComponent } from './smarttable/smarttable.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { CustomtableComponent } from './customtable/customtable.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
     JquerydatatableComponent,
-    SmarttableComponent
+    SmarttableComponent,
+    CustomtableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
+    RouterModule,
     DataTablesModule,
         Ng2SmartTableModule
 

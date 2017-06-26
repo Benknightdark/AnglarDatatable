@@ -1,6 +1,8 @@
 {
     "data": [
-    {
+      {
+        "data":[
+          {
       "id": 860,
       "firstName": "Superman",
       "lastName": "Yoda"
@@ -1500,5 +1502,8 @@
       "firstName": "Someone First Name",
       "lastName": "Bar"
     }
+        ]
+      }
+
   ]
 }
