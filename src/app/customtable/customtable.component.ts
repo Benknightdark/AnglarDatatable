@@ -25,8 +25,8 @@ export class CustomtableComponent implements OnInit {
       start: 0,
       length: 10,
       KeyWordSearch: "",
-      OrderRule:"",
-      SelectedColumn:""
+      OrderRule: "",
+      SelectedColumn: ""
     };
     this.ShowDataCount = [2, 5, 10, 50, 100]
     this.config = {
@@ -63,12 +63,12 @@ export class CustomtableComponent implements OnInit {
   }
   SortTable(ColumnName) {
 
-    if(this.TableSetting.OrderRule==""||this.TableSetting.OrderRule=="DESC"){
-        this.TableSetting.SelectedColumn=ColumnName;
-    this.TableSetting.OrderRule="ASC"
-    }else{
-             this.TableSetting.SelectedColumn=ColumnName;
-    this.TableSetting.OrderRule="DESC"
+    if (this.TableSetting.OrderRule == "" || this.TableSetting.OrderRule == "DESC") {
+      this.TableSetting.SelectedColumn = ColumnName;
+      this.TableSetting.OrderRule = "ASC"
+    } else {
+      this.TableSetting.SelectedColumn = ColumnName;
+      this.TableSetting.OrderRule = "DESC"
     }
 
 
