@@ -10,8 +10,8 @@ export class UserdataService {
 
   }
   GetUserData() {
-     this.TableSetting.start = 1;
-    this.TableSetting.length = 5;
+     this.TableSetting.start = 10;
+    this.TableSetting.length = 10;
     // tslint:disable-next-line:max-line-length
     return this.http.post('http://localhost/ApiUserData/ReturnInfoFabUsers', JSON.stringify(this.TableSetting), this.JSONoptions).map(m => m.json())
   }
