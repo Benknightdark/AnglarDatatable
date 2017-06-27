@@ -35,7 +35,7 @@ this.config = {
     if (this.config.currentPage === 1) {
       this.TableSetting.start = 0
     } else {
-      this.TableSetting.start = number * this.TableSetting.length
+      this.TableSetting.start = (number-1 ) *this.TableSetting.length
     }
 
     this.GetData()
