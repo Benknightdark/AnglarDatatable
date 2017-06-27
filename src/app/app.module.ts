@@ -1,4 +1,4 @@
-import {HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,7 @@ import { SmarttableComponent } from './smarttable/smarttable.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CustomtableComponent } from './customtable/customtable.component';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { UserdataService } from './services/userdata.service';
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserdataService } from './services/userdata.service';
     HttpModule,
     RouterModule,
     DataTablesModule,
-        Ng2SmartTableModule
+    Ng2SmartTableModule,
+    NgxPaginationModule
 
   ],
   providers: [UserdataService],

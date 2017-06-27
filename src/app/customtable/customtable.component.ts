@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
 
@@ -10,25 +10,26 @@ import { UserdataService } from '../services/userdata.service';
 })
 export class CustomtableComponent implements OnInit {
   tabledata
-  TableSetting;
+  TableSetting: any={};
   Columns = [];
-  constructor(private http: UserdataService) {
-    //  this.TableSetting = {
-    //     page: 1,
-    //     limit: 10
-    //   }
-  }
+  Pages=[];
+  constructor(private http: UserdataService) {}
 
   ngOnInit() {
+   this.TableSetting={start:0,length:10};
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-     this.http.GetUserData().subscribe(a=>{
-
-this.tabledata=(a.data)
-console.log(
-this.tabledata[0]['UserName'])
-
+    this.http.GetUserData(this.TableSetting).subscribe(a => {
+      this.tabledata = (a.data)
+      console.log(a)
+      console.log(Math.ceil(14/10))
+      for(let i=0;i<Math.ceil(14/10);i++){
+        this.Pages.push(i+1)
+      }
     })
     //  this.tabledata
   }
+  Detail(id){console.log("detail",id)}
+  Edit(id){console.log("Edit",id)}
+  Delete(id){console.log("Delete",id)}
 
 }
