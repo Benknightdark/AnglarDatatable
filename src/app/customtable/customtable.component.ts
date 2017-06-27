@@ -21,7 +21,7 @@ export class CustomtableComponent implements OnInit {
   ngOnInit() {
 
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-    this.TableSetting = { start: 0, length: 5 };
+    this.TableSetting = { start: 0, length: 10 };
     this.ShowDataCount = [5, 10, 50, 100]
     this.config = {
       itemsPerPage: this.TableSetting.length,
@@ -33,7 +33,7 @@ export class CustomtableComponent implements OnInit {
   ChangeDataCount(length) {
     console.log(length)
     this.TableSetting.length = length
-    this.config.itemsPerPage=this.TableSetting.length
+    this.config.itemsPerPage = this.TableSetting.length
     this.GetData();
 
   }
@@ -49,10 +49,7 @@ export class CustomtableComponent implements OnInit {
       this.TableSetting.start = (number - 1) * this.TableSetting.length
     }
     this.GetData()
-
-
   }
-
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
       this.collection = []
@@ -60,13 +57,8 @@ export class CustomtableComponent implements OnInit {
         this.collection.push(i);
       }
       this.tabledata = a.data
-
       $('select').material_select()
     })
 
-  }
-
-  test(value) {
-    console.log(value)
   }
 }
