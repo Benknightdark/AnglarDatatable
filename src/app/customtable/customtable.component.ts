@@ -20,8 +20,14 @@ export class CustomtableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Columns = ['UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
- this.tabledata=this.http.GetUserData()//.subscribe(a=>console.log(a))
+    this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
+     this.http.GetUserData().subscribe(a=>{
+
+this.tabledata=(a.data)
+console.log(
+this.tabledata[0]['UserName'])
+
+    })
     //  this.tabledata
   }
 

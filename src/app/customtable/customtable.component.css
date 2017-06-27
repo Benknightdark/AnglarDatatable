@@ -12,7 +12,6 @@ table {
 table td {
   white-space: nowrap;
   word-break: break-all;
-  /* Renamed property in CSS3 draft spec */
 }
 
 i {
