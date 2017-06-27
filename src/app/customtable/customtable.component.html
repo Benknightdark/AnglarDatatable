@@ -41,7 +41,6 @@
   <option *ngFor="let item of ShowDataCount" [value]="item"  [selected]="item==TableSetting.length" >{{item}}</option>
 
     </select>
-    {{c.value}}
   </div>
   <div class="col">
     <pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'上一頁'" [previousLabel]='"下一頁"'></pagination-controls>
