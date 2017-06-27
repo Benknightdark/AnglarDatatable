@@ -30,12 +30,7 @@
     </tbody>
   </table>
 </div>
-<ul class="pagination">
-  <li  [class.waves-effect]="ActivePage!=1" [class.disabled]="ActivePage==1" (click)="previous()"><a href="javascript:void(0)"><i class="material-icons">chevron_left</i></a></li>
-  <li class="waves-effect" [class.active]="p==ActivePage" *ngFor="let p of Pages" (click)="ActivePage=p"><a href="javascript:void(0)">{{p}}</a></li>
-  <li [class.waves-effect]="ActivePage!=Pages[Pages.length-1]" (click)="next()" [class.disabled]="ActivePage==Pages[Pages.length-1]"><a href="javascript:void(0)"><i class="material-icons">chevron_right</i></a></li>
-</ul>
-{{Pages[Pages.length-1]}}
-<!--</div>
-class="disabled"
--->
+
+
+<pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'上一頁'" [previousLabel]='"下一頁"'></pagination-controls>
+<div *ngFor="let item of collection |  paginate: config" style="margin:0 0 0 0"></div>

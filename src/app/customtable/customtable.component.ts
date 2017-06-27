@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
+import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 
 
 @Component({
@@ -10,40 +11,44 @@ import { UserdataService } from '../services/userdata.service';
 })
 export class CustomtableComponent implements OnInit {
   tabledata
-  TableSetting: any = {};
+  TableSetting: any
   Columns = [];
-  Pages = [];
-  ActivePage;
+  config: PaginationInstance
+  collection = [];
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
-    this.TableSetting = { start: 0, length: 10 };
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-    this.http.GetUserData(this.TableSetting).subscribe(a => {
-      this.tabledata = (a.data)
-      console.log(a)
-      console.log(Math.ceil(14 / 10))
-      for (let i = 0; i < Math.ceil(a.totoalcount / a.length); i++) {
-        this.Pages.push(i + 1)
-      }
-      this.ActivePage = 1;
-    })
-    //  this.tabledata
+this.TableSetting = { start: 0, length: 10 };
+this.config = {
+    itemsPerPage: this.TableSetting.length,
+    currentPage: 1
+  }
+    this.GetData()
   }
   Detail(id) { console.log("detail", id) }
   Edit(id) { console.log("Edit", id) }
   Delete(id) { console.log("Delete", id) }
-  next() {
-    if (this.ActivePage !== this.Pages[this.Pages.length - 1]) {
-      this.ActivePage = this.ActivePage + 1
+  pageChanged(number) {
+    console.log('change to page', number);
+    this.config.currentPage = number;
+    if (this.config.currentPage === 1) {
+      this.TableSetting.start = 0
+    } else {
+      this.TableSetting.start = number * this.TableSetting.length
     }
 
+    this.GetData()
   }
-  previous() {
-    if (this.ActivePage !== 1) {
-      this.ActivePage = this.ActivePage - 1
-    }
+  GetData() {
+    this.http.GetUserData(this.TableSetting).subscribe(a => {
+      this.collection = []
+      this.tabledata = (a.data)
+      for (let i = 1; i <= a.totoalcount; i++) {
+        this.collection.push(i);
+      }
+    })
+  }
 
-  }
 
 }
