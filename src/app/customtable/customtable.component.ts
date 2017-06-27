@@ -21,8 +21,14 @@ export class CustomtableComponent implements OnInit {
   ngOnInit() {
 
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-    this.TableSetting = { start: 0, length: 10 };
-    this.ShowDataCount = [5, 10, 50, 100]
+    this.TableSetting = {
+      start: 0,
+      length: 10,
+      KeyWordSearch: "",
+      OrderRule:"",
+      SelectedColumn:""
+    };
+    this.ShowDataCount = [2, 5, 10, 50, 100]
     this.config = {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
@@ -50,6 +56,23 @@ export class CustomtableComponent implements OnInit {
     }
     this.GetData()
   }
+  KeyWordSearch(keyword) {
+    this.TableSetting.KeyWordSearch = keyword;
+    console.log(keyword)
+    this.GetData()
+  }
+  SortTable(ColumnName) {
+
+    if(this.TableSetting.OrderRule==""||this.TableSetting.OrderRule=="DESC"){
+        this.TableSetting.SelectedColumn=ColumnName;
+    this.TableSetting.OrderRule="ASC"
+    }else{
+             this.TableSetting.SelectedColumn=ColumnName;
+    this.TableSetting.OrderRule="DESC"
+    }
+
+
+  }
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
       this.collection = []
@@ -58,6 +81,7 @@ export class CustomtableComponent implements OnInit {
       }
       this.tabledata = a.data
       $('select').material_select()
+      this.config.itemsPerPage = this.TableSetting.length
     })
 
   }

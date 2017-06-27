@@ -17,3 +17,4 @@ table td {
 i {
   vertical-align: middle !important;
 }
+th { cursor: pointer; cursor: hand; }
