@@ -19,11 +19,11 @@ export class CustomtableComponent implements OnInit {
 
   ngOnInit() {
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-this.TableSetting = { start: 0, length: 10 };
-this.config = {
-    itemsPerPage: this.TableSetting.length,
-    currentPage: 1
-  }
+    this.TableSetting = { start: 0, length: 10 };
+    this.config = {
+      itemsPerPage: this.TableSetting.length,
+      currentPage: 1
+    }
     this.GetData()
   }
   Detail(id) { console.log("detail", id) }
@@ -35,7 +35,7 @@ this.config = {
     if (this.config.currentPage === 1) {
       this.TableSetting.start = 0
     } else {
-      this.TableSetting.start = (number-1 ) *this.TableSetting.length
+      this.TableSetting.start = (number - 1) * this.TableSetting.length
     }
 
     this.GetData()
