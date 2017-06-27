@@ -31,9 +31,11 @@
   </table>
 </div>
 <ul class="pagination">
-  <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-  <li class="waves-effect" [class.active]="p==1" *ngFor="let p of Pages"><a href="javascript:void(0)">{{p}}</a></li>
-  <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  <li  [class.waves-effect]="ActivePage!=1" [class.disabled]="ActivePage==1" (click)="previous()"><a href="javascript:void(0)"><i class="material-icons">chevron_left</i></a></li>
+  <li class="waves-effect" [class.active]="p==ActivePage" *ngFor="let p of Pages" (click)="ActivePage=p"><a href="javascript:void(0)">{{p}}</a></li>
+  <li [class.waves-effect]="ActivePage!=Pages[Pages.length-1]" (click)="next()" [class.disabled]="ActivePage==Pages[Pages.length-1]"><a href="javascript:void(0)"><i class="material-icons">chevron_right</i></a></li>
 </ul>
-
-<!--</div>-->
+{{Pages[Pages.length-1]}}
+<!--</div>
+class="disabled"
+-->
