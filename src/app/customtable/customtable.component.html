@@ -1,36 +1,51 @@
 <!--<div class="container" >style="margin-left:400px; margin-right: 100px;"-->
-<div class="TableScroll">
-  <table class="bordered striped">
-    <thead>
-      <tr>
-        <!--<i class="material-icons">expand_more</i>-->
-        <th *ngFor="let column of Columns">
-          <div *ngIf="column=='ID'">
-            {{""}}
-          </div>
-          <div *ngIf="column!='ID'">
-            {{column}}
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of tabledata ; let i=index">
-        <td *ngFor="let c of Columns">
-          <div *ngIf="c=='ID';else ElseBlock">
-            <a class="btn-floating  waves-effect waves-light blue btn-small" (click)="Detail(item[c])"> <i class="material-icons">pageview</i></a>
-            <a class="btn-floating  waves-effect waves-light green btn-smal" (click)="Edit(item[c])"> <i class="material-icons">edit</i></a>
-            <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item[c])"> <i class="material-icons">delete</i></a>
-          </div>
-          <ng-template #ElseBlock>
-            {{item[c]}}
-          </ng-template>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="row">
+  <div class="TableScroll">
+    <table class="bordered striped">
+      <thead>
+        <tr>
+          <!--<i class="material-icons">expand_more</i>-->
+          <th *ngFor="let column of Columns">
+            <div *ngIf="column=='ID'">
+              {{""}}
+            </div>
+            <div *ngIf="column!='ID'">
+              {{column}}
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tabledata ; let i=index">
+          <td *ngFor="let c of Columns">
+            <div *ngIf="c=='ID';else ElseBlock">
+              <a class="btn-floating  waves-effect waves-light blue btn-small" (click)="Detail(item[c])"> <i class="material-icons">pageview</i></a>
+              <a class="btn-floating  waves-effect waves-light green btn-smal" (click)="Edit(item[c])"> <i class="material-icons">edit</i></a>
+              <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item[c])"> <i class="material-icons">delete</i></a>
+            </div>
+            <ng-template #ElseBlock>
+              {{item[c]}}
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
+<div class="row">
+  <div class="col">
+    <select class="browser-default" #c (change)="ChangeDataCount(c.value)" id="test">
 
-<pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'上一頁'" [previousLabel]='"下一頁"'></pagination-controls>
-<div *ngFor="let item of collection |  paginate: config" style="margin:0 0 0 0"></div>
+  <option *ngFor="let item of ShowDataCount" [value]="item"  [selected]="item==TableSetting.length" >{{item}}</option>
+
+    </select>
+    {{c.value}}
+  </div>
+  <div class="col">
+    <pagination-controls (pageChange)="pageChanged($event)" [nextLabel]="'上一頁'" [previousLabel]='"下一頁"'></pagination-controls>
+    <div *ngFor="let item of collection |  paginate: config" style="margin:0 0 0 0"></div>
+  </div>
+</div>
+

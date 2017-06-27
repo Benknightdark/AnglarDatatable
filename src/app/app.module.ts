@@ -11,6 +11,7 @@ import { CustomtableComponent } from './customtable/customtable.component';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserdataService } from './services/userdata.service';
+import { CommonModule } from "@angular/common";
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +22,7 @@ import { UserdataService } from './services/userdata.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     HttpModule,
     RouterModule,
     DataTablesModule,

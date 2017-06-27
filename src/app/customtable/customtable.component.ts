@@ -15,16 +15,26 @@ export class CustomtableComponent implements OnInit {
   Columns = [];
   config: PaginationInstance
   collection = [];
+  ShowDataCount = []
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
+
     this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
     this.TableSetting = { start: 0, length: 10 };
+    this.ShowDataCount = [5, 10, 50, 100]
     this.config = {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
     }
     this.GetData()
+
+  }
+    ChangeDataCount(length) {
+    console.log(length)
+    this.TableSetting.length = length
+    this.GetData();
+
   }
   Detail(id) { console.log("detail", id) }
   Edit(id) { console.log("Edit", id) }
@@ -37,18 +47,25 @@ export class CustomtableComponent implements OnInit {
     } else {
       this.TableSetting.start = (number - 1) * this.TableSetting.length
     }
-
     this.GetData()
+
+
   }
+
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
       this.collection = []
-      this.tabledata = (a.data)
       for (let i = 1; i <= a.totoalcount; i++) {
         this.collection.push(i);
       }
-    })
+      this.tabledata = a.data
+
+      $('select').material_select()
+      })
+
   }
 
-
+test(value){
+  console.log(value)
+}
 }
