@@ -19,22 +19,23 @@ export class CustomtableComponent implements OnInit {
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
-this.http.GetUserDataColumnsInfo().subscribe(data=>this.Columns=data);
-  //  this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
-    this.TableSetting = {
-      start: 0,
-      length: 10,
-      KeyWordSearch: "",
-      OrderRule: "",
-      SelectedColumn: ""
-    };
-    this.ShowDataCount = [2, 5, 10, 50, 100]
-    this.config = {
-      itemsPerPage: this.TableSetting.length,
-      currentPage: 1
-    }
-    this.GetData()
+    this.http.GetUserDataColumnsInfo().subscribe(data => {
+      this.Columns = data;
+      this.TableSetting = {
+        start: 0,
+        length: 10,
+        KeyWordSearch: "",
+        OrderRule: "",
+        SelectedColumn: ""
+      };
 
+      this.ShowDataCount = [2, 5, 10, 50, 100]
+      this.config = {
+        itemsPerPage: this.TableSetting.length,
+        currentPage: 1
+      }
+      this.GetData()
+    });
   }
   ChangeDataCount(length) {
     console.log(length)
