@@ -41,26 +41,17 @@
             <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item.ID)"> <i class="material-icons">delete</i></a>
           </td>
           <td *ngFor="let c of Columns">
-
-
-
-
             {{item[c.ColumnName]}}
-
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-
 </div>
-
 <div class="row">
   <div class="col">
     <select class="browser-default" #c (change)="ChangeDataCount(c.value)" id="test">
-
   <option *ngFor="let item of ShowDataCount" [value]="item"  [selected]="item==TableSetting.length" >{{item}}</option>
-
     </select>
   </div>
   <div class="col">
