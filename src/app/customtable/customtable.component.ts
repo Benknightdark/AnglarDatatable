@@ -61,15 +61,17 @@ this.http.GetUserDataColumnsInfo().subscribe(data=>this.Columns=data);
     console.log(keyword)
     this.GetData()
   }
-  SortTable(ColumnName) {
+  SortTable(Column) {
 
     if (this.TableSetting.OrderRule == "" || this.TableSetting.OrderRule == "DESC") {
-      this.TableSetting.SelectedColumn = ColumnName;
+      this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "ASC"
     } else {
-      this.TableSetting.SelectedColumn = ColumnName;
+      this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "DESC"
     }
+    console.log(this.TableSetting)
+    this.GetData();
 
 
   }

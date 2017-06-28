@@ -11,17 +11,12 @@
     <table class="bordered striped">
       <thead>
         <tr>
-          <!--<i class="material-icons">expand_more</i>-->
           <th style="background-color:yellow"></th>
           <th *ngFor="let column of Columns" style="background-color:yellow">
-            <!--<div *ngIf="column=='ID'">
-              {{""}}
-              *ngIf="column!='ID'"
-            </div>-->
             <div style="display: inline-block; width: 150px;" (click)="SortTable(column)">
               {{column.ColumnTitle}}
-              <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column">expand_more</i>
-              <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column">expand_less</i>
+              <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column.ColumnName">expand_more</i>
+              <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column.ColumnName">expand_less</i>
             </div>
           </th>
         </tr>
@@ -35,16 +30,14 @@
           </td>
           <td *ngFor="let c of Columns">
             <div *ngIf="c.ColumnType=='Date'">
-                    {{item[c.ColumnName]|date: 'yyyy/MM/dd'}}
-              </div>
-               <div *ngIf="c.ColumnType=='DateTime' ">
-                    {{item[c.ColumnName]|date: 'yyyy/MM/dd HH:mm:ss'}}
-              </div>
-               <div *ngIf="c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
-                    {{item[c.ColumnName]}}
-              </div>
-
-
+              {{item[c.ColumnName]|date: 'yyyy/MM/dd'}}
+            </div>
+            <div *ngIf="c.ColumnType=='DateTime' ">
+              {{item[c.ColumnName]|date: 'yyyy/MM/dd HH:mm:ss'}}
+            </div>
+            <div *ngIf="c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
+              {{item[c.ColumnName]}}
+            </div>
           </td>
         </tr>
       </tbody>
