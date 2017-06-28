@@ -16,13 +16,20 @@
 </div>
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
-  <div class="input-field col s3" *ngFor="let c of Columns">
-    <div *ngIf="this.CustomAdvancedColumnSearch[c.ColumnName]">
-      </div>
-    <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
-    <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+  <div class="input-field col s3" *ngFor="let c of Columns?.TableColumn">
+    <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
+      <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
+      <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+
+    </div>
+
+    <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
+      <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
+      <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+         {{CheckAdvancedSearch(c.ColumnName)}}
+    </div>
+
   </div>
-  {{AdvancedColumnSearchOption|json}}
 </div>
 <!--TableData-->
 <div class="row">
@@ -31,7 +38,7 @@
       <thead>
         <tr>
           <th style="background-color:yellow"></th>
-          <th *ngFor="let column of Columns" style="background-color:yellow">
+          <th *ngFor="let column of Columns?.TableColumn" style="background-color:yellow">
             <div style="display: inline-block; width: 150px;" (click)="SortTable(column)">
               {{column.ColumnTitle}}
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column.ColumnName">expand_less</i>
@@ -47,7 +54,7 @@
             <a class="btn-floating  waves-effect waves-light green btn-smal" (click)="Edit(item.ID)"> <i class="material-icons">edit</i></a>
             <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item.ID)"> <i class="material-icons">delete</i></a>
           </td>
-          <td *ngFor="let c of Columns">
+          <td *ngFor="let c of Columns?.TableColumn">
             <div *ngIf="c.ColumnType=='Date'">
               {{item[c.ColumnName]|date: 'yyyy/MM/dd'}}
             </div>

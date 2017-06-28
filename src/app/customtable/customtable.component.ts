@@ -41,10 +41,10 @@ export class CustomtableComponent implements OnInit {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
     }
-     //Custom AdvancedColumnSearch
-    this.CustomAdvancedColumnSearch["UserType"] = { ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" };
+
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
+     // console.log(this.Columns.AdvancedColumnSearchOptions["UserType"])
       this.GetData()
 
     });
@@ -86,6 +86,11 @@ export class CustomtableComponent implements OnInit {
     this.GetData();
 
 
+  }
+  CheckAdvancedSearch(ColumnName){
+    console.log(ColumnName)
+    console.log(this.Columns.AdvancedColumnSearchOptions[ColumnName])
+    return typeof this.Columns.AdvancedColumnSearchOptions[ColumnName]==='undefined'
   }
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
