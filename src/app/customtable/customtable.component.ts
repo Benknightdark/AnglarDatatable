@@ -99,7 +99,6 @@ export class CustomtableComponent implements OnInit {
     this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
       $('select').material_select()
       $('select').change((e) => {
-        // console.log($(e.currentTarget)[0].attributes["ng-reflect-name"].value)
         this.AdvancedColumnSearchOption[$(e.currentTarget)[0].attributes["ng-reflect-name"].value] = e.currentTarget.value;
         console.log(this.AdvancedColumnSearchOption)
       });
