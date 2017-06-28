@@ -39,12 +39,12 @@ export class CustomtableComponent implements OnInit {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
     }
+     //Custom AdvancedColumnSearch
+    this.CustomAdvancedColumnSearch["UserType"] = { ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" };
+    console.log(this.CustomAdvancedColumnSearch)
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
       this.GetData()
-      //Custom AdvancedColumnSearch
-      this.CustomAdvancedColumnSearch["UserType"] = { ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" };
-      console.log(this.CustomAdvancedColumnSearch)
 
     });
   }
