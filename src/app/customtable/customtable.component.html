@@ -16,10 +16,11 @@
 </div>
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
-  <div class="input-field col s3">
-    <input value="Alvin" id="first_name2" type="text" class="validate">
-    <label class="active" for="first_name2">First Name</label>
+  <div class="input-field col s3" *ngFor="let c of Columns" >
+    <input  [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
+    <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
   </div>
+  {{AdvancedColumnSearchOption|json}}
 </div>
 <!--TableData-->
 <div class="row">
@@ -72,3 +73,4 @@
     <div *ngFor="let item of collection |  paginate: config" style="margin:0 0 0 0"></div>
   </div>
 </div>
+

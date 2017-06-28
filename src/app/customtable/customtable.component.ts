@@ -22,6 +22,7 @@ export class CustomtableComponent implements OnInit {
 
   //AdvancedColumnSearch
   CustomAdvancedColumnSearch: any = {}
+  AdvancedColumnSearchOption:any={}
   ShowAdvancedColumnSearch: boolean = false;
   constructor(private http: UserdataService) { }
 
@@ -31,7 +32,8 @@ export class CustomtableComponent implements OnInit {
       length: 10,
       KeyWordSearch: "",
       OrderRule: "",
-      SelectedColumn: ""
+      SelectedColumn: "",
+      CustomAdvancedColumnSearch:this.CustomAdvancedColumnSearch
     };
 
     this.ShowDataCount = [10, 40, 50, 100]
@@ -41,7 +43,6 @@ export class CustomtableComponent implements OnInit {
     }
      //Custom AdvancedColumnSearch
     this.CustomAdvancedColumnSearch["UserType"] = { ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" };
-    console.log(this.CustomAdvancedColumnSearch)
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
       this.GetData()

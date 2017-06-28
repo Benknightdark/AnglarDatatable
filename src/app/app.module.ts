@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserdataService } from './services/userdata.service';
 import { CommonModule } from "@angular/common";
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { CommonModule } from "@angular/common";
     CommonModule,
     HttpModule,
     RouterModule,
+    FormsModule,
     DataTablesModule,
     Ng2SmartTableModule,
     NgxPaginationModule
