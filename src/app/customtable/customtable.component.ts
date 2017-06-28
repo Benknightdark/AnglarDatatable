@@ -22,7 +22,7 @@ export class CustomtableComponent implements OnInit {
   ShowDataCount = [];
 
   //AdvancedColumnSearch
-  CustomAdvancedColumnSearch: any = {}
+
   AdvancedColumnSearchOption: any = {}
   ShowAdvancedColumnSearch: boolean = false;
   constructor(private http: UserdataService, private ngZone: NgZone) { }
@@ -35,7 +35,7 @@ export class CustomtableComponent implements OnInit {
       KeyWordSearch: "",
       OrderRule: "",
       SelectedColumn: "",
-      CustomAdvancedColumnSearch: this.CustomAdvancedColumnSearch
+      // CustomAdvancedColumnSearch: this.CustomAdvancedColumnSearch
     };
 
     this.ShowDataCount = [10, 40, 50, 100]
@@ -46,7 +46,14 @@ export class CustomtableComponent implements OnInit {
 
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
-      // console.log(this.Columns.AdvancedColumnSearchOptions["UserType"])
+      console.log( this.Columns )
+      for (let i = 0; i < this.Columns.TableColumn.length ; i++) {
+        if(this.Columns.TableColumn[i].ColumnType=='Date'||this.Columns.TableColumn[i].ColumnType=='DateTime'){
+          console.log(this.Columns.TableColumn[i].ColumnName)
+          this.AdvancedColumnSearchOption[this.Columns.TableColumn[i].ColumnName]=[]
+        }
+      }
+
       this.GetData()
 
     });
@@ -97,11 +104,13 @@ export class CustomtableComponent implements OnInit {
   ShowAdvancedColumnSearchForm() {
     this.ShowAdvancedColumnSearch = !this.ShowAdvancedColumnSearch;
     this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
+
       $('select').material_select()
       $('select').change((e) => {
         this.AdvancedColumnSearchOption[$(e.currentTarget)[0].attributes["ng-reflect-name"].value] = e.currentTarget.value;
         console.log(this.AdvancedColumnSearchOption)
       });
+
 
     });
   }

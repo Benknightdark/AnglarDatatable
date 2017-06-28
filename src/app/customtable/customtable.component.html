@@ -28,13 +28,13 @@
       </div>
       <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
         <div class="col">
-          <input [id]="c.ColumnTitle+'-start'" type="date" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" (keyup)="OnKeyUpAdvColSearch()">
-          <label class="active" [for]="c.ColumnTitle+'-start'">{{c.ColumnTitle}}</label>
+          <input [id]="c.ColumnName+'-start'" type="date"  [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName][0]" (keyup)="OnKeyUpAdvColSearch()">
+          <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
         </div>
         <div class="col">~</div>
         <div class="col">
-          <input [id]="c.ColumnTitle+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" (keyup)="OnKeyUpAdvColSearch()">
-          <label class="active" [for]="c.ColumnTitle+'-End'">{{c.ColumnTitle}}</label>
+          <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName][1]" (keyup)="OnKeyUpAdvColSearch()">
+          <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
         </div>
       </div>
       <div *ngIf="c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
