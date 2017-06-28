@@ -16,4 +16,7 @@ export class UserdataService {
      JSON.stringify(TableSetting), this.JSONoptions)
     .map(m => m.json())
   }
+  GetUserDataColumnsInfo(){
+    return this.http.get('http://localhost:5566/ApiUserData/GetColumnInfo').map(m=>m.json())
+  }
 }

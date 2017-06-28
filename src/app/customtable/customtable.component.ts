@@ -3,24 +3,24 @@ import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
 import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 
-
 @Component({
   selector: 'app-customtable',
   templateUrl: './customtable.component.html',
   styleUrls: ['./customtable.component.css']
 })
+
 export class CustomtableComponent implements OnInit {
   tabledata
   TableSetting: any
-  Columns = [];
+  Columns //= [];
   config: PaginationInstance
   collection = [];
   ShowDataCount = []
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
-
-    this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
+this.http.GetUserDataColumnsInfo().subscribe(data=>this.Columns=data);
+  //  this.Columns = ['ID', 'UserName', "DisplayName", "UserType", "IsEnabled", "IsAdmin", "Email", "Tel", "Mobile", "Remark", "ExpiredDT", "LastLogonDT", "InitUID", "InitDT", "ModifiedUID", "ModifiedDT"];
     this.TableSetting = {
       start: 0,
       length: 10,
