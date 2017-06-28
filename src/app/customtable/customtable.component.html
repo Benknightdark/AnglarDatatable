@@ -6,7 +6,6 @@
     <label for="icon_prefix">關鍵字搜尋</label>
   </div>
 </div>
-
 <div class="row">
   <div class="TableScroll">
     <table class="bordered striped">
@@ -20,15 +19,9 @@
               *ngIf="column!='ID'"
             </div>-->
             <div style="display: inline-block; width: 150px;" (click)="SortTable(column)">
-
               {{column.ColumnTitle}}
-
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column">expand_more</i>
-
-
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column">expand_less</i>
-
-
             </div>
           </th>
         </tr>
@@ -41,7 +34,17 @@
             <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item.ID)"> <i class="material-icons">delete</i></a>
           </td>
           <td *ngFor="let c of Columns">
-            {{item[c.ColumnName]}}
+            <div *ngIf="c.ColumnType=='Date'">
+                    {{item[c.ColumnName]|date: 'yyyy/MM/dd'}}
+              </div>
+               <div *ngIf="c.ColumnType=='DateTime' ">
+                    {{item[c.ColumnName]|date: 'yyyy/MM/dd HH:mm:ss'}}
+              </div>
+               <div *ngIf="c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
+                    {{item[c.ColumnName]}}
+              </div>
+
+
           </td>
         </tr>
       </tbody>
