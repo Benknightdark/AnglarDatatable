@@ -1,11 +1,27 @@
 <!--<div class="container" >style="margin-left:400px; margin-right: 100px;"-->
+
+<!--Table function-->
 <div class="row">
+  <div class="input-field col">
+    <a class="btn-floating  waves-effect waves-light blue btn-small">   <i class="material-icons">list</i></a>
+  </div>
+  <div class="input-field col">
+    <a class="btn-floating  waves-effect waves-light blue btn-small" (click)="ShowAdvancedColumnSearch=!ShowAdvancedColumnSearch">   <i class="material-icons">find_in_page</i></a>
+  </div>
   <div class="input-field col s6">
     <i class="material-icons prefix">search</i>
     <input id="icon_prefix" type="text" (keyup)="KeyWordSearch(keyword.value)" #keyword>
     <label for="icon_prefix">關鍵字搜尋</label>
   </div>
 </div>
+<!--AdvancedColumnSearchOptions-->
+<div class="row" *ngIf="ShowAdvancedColumnSearch">
+  <div class="input-field col s3">
+    <input value="Alvin" id="first_name2" type="text" class="validate">
+    <label class="active" for="first_name2">First Name</label>
+  </div>
+</div>
+<!--TableData-->
 <div class="row">
   <div class="TableScroll">
     <table class="bordered striped">
@@ -44,6 +60,7 @@
     </table>
   </div>
 </div>
+<!--Paging button-->
 <div class="row">
   <div class="col">
     <select class="browser-default" #c (change)="ChangeDataCount(c.value)" id="test">

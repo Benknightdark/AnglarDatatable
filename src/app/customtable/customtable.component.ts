@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
 import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
-
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-customtable',
   templateUrl: './customtable.component.html',
@@ -10,12 +10,19 @@ import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 })
 
 export class CustomtableComponent implements OnInit {
+  //table and columns
   tabledata
   TableSetting: any
-  Columns //= [];
+  Columns;
+
+  //paging group
   config: PaginationInstance
   collection = [];
-  ShowDataCount = []
+  ShowDataCount = [];
+
+  //AdvancedColumnSearch
+  CustomAdvancedColumnSearch = []
+  ShowAdvancedColumnSearch:boolean=false;
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
@@ -29,12 +36,15 @@ export class CustomtableComponent implements OnInit {
         SelectedColumn: ""
       };
 
-      this.ShowDataCount = [2, 5, 10, 50, 100]
+      this.ShowDataCount = [10, 40, 50, 100]
       this.config = {
         itemsPerPage: this.TableSetting.length,
         currentPage: 1
       }
       this.GetData()
+      //Custom AdvancedColumnSearch
+      this.CustomAdvancedColumnSearch.push({ ColumnName: "UserType", ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" })
+
     });
   }
   ChangeDataCount(length) {
@@ -48,7 +58,6 @@ export class CustomtableComponent implements OnInit {
   Edit(id) { console.log("Edit", id) }
   Delete(id) { console.log("Delete", id) }
   pageChanged(number) {
-    console.log('change to page', number);
     this.config.currentPage = number;
     if (this.config.currentPage === 1) {
       this.TableSetting.start = 0
