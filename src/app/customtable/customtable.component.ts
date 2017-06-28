@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
 import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-customtable',
   templateUrl: './customtable.component.html',
@@ -22,18 +23,19 @@ export class CustomtableComponent implements OnInit {
 
   //AdvancedColumnSearch
   CustomAdvancedColumnSearch: any = {}
-  AdvancedColumnSearchOption:any={}
+  AdvancedColumnSearchOption: any = {}
   ShowAdvancedColumnSearch: boolean = false;
-  constructor(private http: UserdataService) { }
+  constructor(private http: UserdataService, private ngZone: NgZone) { }
 
   ngOnInit() {
+
     this.TableSetting = {
       start: 0,
       length: 10,
       KeyWordSearch: "",
       OrderRule: "",
       SelectedColumn: "",
-      CustomAdvancedColumnSearch:this.CustomAdvancedColumnSearch
+      CustomAdvancedColumnSearch: this.CustomAdvancedColumnSearch
     };
 
     this.ShowDataCount = [10, 40, 50, 100]
@@ -44,10 +46,11 @@ export class CustomtableComponent implements OnInit {
 
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
-     // console.log(this.Columns.AdvancedColumnSearchOptions["UserType"])
+      // console.log(this.Columns.AdvancedColumnSearchOptions["UserType"])
       this.GetData()
 
     });
+    // $('select').material_select();
   }
   ChangeDataCount(length) {
     console.log(length)
@@ -87,11 +90,29 @@ export class CustomtableComponent implements OnInit {
 
 
   }
-  CheckAdvancedSearch(ColumnName){
-    console.log(ColumnName)
-    console.log(this.Columns.AdvancedColumnSearchOptions[ColumnName])
-    return typeof this.Columns.AdvancedColumnSearchOptions[ColumnName]==='undefined'
+  CheckAdvancedSearch(ColumnName) {
+
+    return typeof this.Columns.AdvancedColumnSearchOptions[ColumnName] === 'undefined'
   }
+  ShowAdvancedColumnSearchForm() {
+    this.ShowAdvancedColumnSearch = !this.ShowAdvancedColumnSearch;
+    this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
+      $('select').material_select()
+      $('select').change((e) => {
+        // console.log($(e.currentTarget)[0].attributes["ng-reflect-name"].value)
+        this.AdvancedColumnSearchOption[$(e.currentTarget)[0].attributes["ng-reflect-name"].value] = e.currentTarget.value;
+        console.log(this.AdvancedColumnSearchOption)
+      });
+
+    });
+  }
+  OnKeyUpAdvColSearch() {
+    console.log(this.AdvancedColumnSearchOption)
+  }
+  OnChangeAdvColSearch() {
+    console.log(this.AdvancedColumnSearchOption)
+  }
+
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
       this.collection = []

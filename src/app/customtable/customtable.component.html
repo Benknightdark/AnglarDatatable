@@ -6,7 +6,7 @@
     <a class="btn-floating  waves-effect waves-light blue btn-small">   <i class="material-icons">list</i></a>
   </div>
   <div class="input-field col">
-    <a class="btn-floating  waves-effect waves-light blue btn-small" (click)="ShowAdvancedColumnSearch=!ShowAdvancedColumnSearch">   <i class="material-icons">find_in_page</i></a>
+    <a class="btn-floating  waves-effect waves-light blue btn-small" (click)="ShowAdvancedColumnSearchForm()">   <i class="material-icons">find_in_page</i></a>
   </div>
   <div class="input-field col s6">
     <i class="material-icons prefix">search</i>
@@ -16,20 +16,43 @@
 </div>
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
-  <div class="input-field col s3" *ngFor="let c of Columns?.TableColumn">
-    <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
-      <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
-      <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+  <div *ngFor="let c of Columns?.TableColumn">
+    <div *ngIf="CheckAdvancedSearch(c.ColumnName)" class="input-field col s3">
+      <div *ngIf="c.ColumnType=='Boolean'">
+        <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName">
+            <option value=""  selected></option>
+            <option value="true">是</option>
+            <option value="false">否</option>
+          </select>
+        <label> {{c.ColumnTitle}}</label>
+      </div>
+      <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
+        <input [id]="c.ColumnTitle" type="date" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" (keyup)="OnKeyUpAdvColSearch()">
+        <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+
+      </div>
+      <div *ngIf="c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
+        <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" (keyup)="OnKeyUpAdvColSearch()">
+        <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+
+      </div>
+
 
     </div>
 
-    <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
-      <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]">
-      <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
-         {{CheckAdvancedSearch(c.ColumnName)}}
+    <div *ngIf="!CheckAdvancedSearch(c.ColumnName)" class="input-field col s3">
+
+      <!--class="browser-default"-->
+      <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName">
+      <option value=""  selected></option>
+      <option *ngFor="let item of Columns.AdvancedColumnSearchOptions[c.ColumnName]" [value]="item" >{{item}}</option>
+
+    </select>
+      <label> {{c.ColumnTitle}}</label>
     </div>
 
   </div>
+  {{AdvancedColumnSearchOption|json}}
 </div>
 <!--TableData-->
 <div class="row">
