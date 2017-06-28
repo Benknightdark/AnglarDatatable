@@ -31,8 +31,8 @@
           <th *ngFor="let column of Columns" style="background-color:yellow">
             <div style="display: inline-block; width: 150px;" (click)="SortTable(column)">
               {{column.ColumnTitle}}
-              <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column.ColumnName">expand_more</i>
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column.ColumnName">expand_less</i>
+              <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column.ColumnName">expand_more</i>
             </div>
           </th>
         </tr>

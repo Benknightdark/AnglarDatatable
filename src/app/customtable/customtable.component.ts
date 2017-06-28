@@ -21,29 +21,30 @@ export class CustomtableComponent implements OnInit {
   ShowDataCount = [];
 
   //AdvancedColumnSearch
-  CustomAdvancedColumnSearch = []
-  ShowAdvancedColumnSearch:boolean=false;
+  CustomAdvancedColumnSearch: any = {}
+  ShowAdvancedColumnSearch: boolean = false;
   constructor(private http: UserdataService) { }
 
   ngOnInit() {
+    this.TableSetting = {
+      start: 0,
+      length: 10,
+      KeyWordSearch: "",
+      OrderRule: "",
+      SelectedColumn: ""
+    };
+
+    this.ShowDataCount = [10, 40, 50, 100]
+    this.config = {
+      itemsPerPage: this.TableSetting.length,
+      currentPage: 1
+    }
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
-      this.TableSetting = {
-        start: 0,
-        length: 10,
-        KeyWordSearch: "",
-        OrderRule: "",
-        SelectedColumn: ""
-      };
-
-      this.ShowDataCount = [10, 40, 50, 100]
-      this.config = {
-        itemsPerPage: this.TableSetting.length,
-        currentPage: 1
-      }
       this.GetData()
       //Custom AdvancedColumnSearch
-      this.CustomAdvancedColumnSearch.push({ ColumnName: "UserType", ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" })
+      this.CustomAdvancedColumnSearch["UserType"] = { ApiType: "Get", ApiUrl: environment.ApiUrl + "/ApiUserData/UserType" };
+      console.log(this.CustomAdvancedColumnSearch)
 
     });
   }
