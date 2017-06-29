@@ -49,12 +49,9 @@ export class CustomtableComponent implements OnInit {
       console.log(this.Columns)
       for (let i = 0; i < this.Columns.TableColumn.length; i++) {
         if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          console.log(this.Columns.TableColumn[i].ColumnName)
-          // this.AdvancedColumnSearchOption[this.Columns.TableColumn[i].ColumnName]=[]
           this.AdvancedColumnSearchOption.push({
             ColumnName: this.Columns.TableColumn[i].ColumnName,
             Value: { start: "", End: "" }
-
             , FilterType: "Array"
           })
         } else {
@@ -65,7 +62,6 @@ export class CustomtableComponent implements OnInit {
       this.GetData()
 
     });
-    // $('select').material_select();
   }
   ChangeDataCount(length) {
     console.log(length)
@@ -138,7 +134,6 @@ export class CustomtableComponent implements OnInit {
     this.GetData();
     console.log(this.AdvancedColumnSearchOption)
   }
-
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
       console.log(a)
