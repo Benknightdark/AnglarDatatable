@@ -16,10 +16,10 @@
 </div>
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
-  <div *ngFor="let c of Columns?.TableColumn" class="input-field col s3">
+  <div *ngFor="let c of Columns?.TableColumn;let i=index" class="input-field col s3">
     <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
       <div *ngIf="c.ColumnType=='Boolean'">
-        <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName">
+        <select [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" [name]="c.ColumnName">
             <option value=""  selected></option>
             <option value="true">是</option>
             <option value="false">否</option>
@@ -28,17 +28,17 @@
       </div>
       <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
         <div class="col">
-          <input [id]="c.ColumnName+'-start'" type="date"  [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName][0]" (keyup)="OnKeyUpAdvColSearch()">
+          <input [id]="c.ColumnName+'-start'" type="date"  [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
         </div>
         <div class="col">~</div>
         <div class="col">
-          <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName][1]" (keyup)="OnKeyUpAdvColSearch()">
+          <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
         </div>
       </div>
       <div *ngIf="c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
-        <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" (keyup)="OnKeyUpAdvColSearch()">
+        <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" (keyup)="OnKeyUpAdvColSearch()">
         <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
 
       </div>
@@ -49,7 +49,7 @@
     <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
 
       <!--class="browser-default"-->
-      <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName">
+      <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName" (change)="OnChangeAdvColSearch()">
       <option value=""  selected></option>
       <option *ngFor="let item of Columns.AdvancedColumnSearchOptions[c.ColumnName]" [value]="item" >{{item}}</option>
 
@@ -58,7 +58,7 @@
     </div>
 
   </div>
-  {{AdvancedColumnSearchOption|json}}
+  <!--{{AdvancedColumnSearchOption|json}}-->
 </div>
 <!--TableData-->
 <div class="row">

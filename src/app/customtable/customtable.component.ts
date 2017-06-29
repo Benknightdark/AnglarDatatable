@@ -23,7 +23,7 @@ export class CustomtableComponent implements OnInit {
 
   //AdvancedColumnSearch
 
-  AdvancedColumnSearchOption: any = {}
+  AdvancedColumnSearchOption = []
   ShowAdvancedColumnSearch: boolean = false;
   constructor(private http: UserdataService, private ngZone: NgZone) { }
 
@@ -35,7 +35,7 @@ export class CustomtableComponent implements OnInit {
       KeyWordSearch: "",
       OrderRule: "",
       SelectedColumn: "",
-       CustomAdvancedColumnSearch: this.AdvancedColumnSearchOption
+      CustomAdvancedColumnSearch: this.AdvancedColumnSearchOption
     };
 
     this.ShowDataCount = [10, 40, 50, 100]
@@ -46,14 +46,22 @@ export class CustomtableComponent implements OnInit {
 
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       this.Columns = data;
-      console.log( this.Columns )
-      for (let i = 0; i < this.Columns.TableColumn.length ; i++) {
-        if(this.Columns.TableColumn[i].ColumnType=='Date'||this.Columns.TableColumn[i].ColumnType=='DateTime'){
+      console.log(this.Columns)
+      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
           console.log(this.Columns.TableColumn[i].ColumnName)
-          this.AdvancedColumnSearchOption[this.Columns.TableColumn[i].ColumnName]=[]
+          // this.AdvancedColumnSearchOption[this.Columns.TableColumn[i].ColumnName]=[]
+          this.AdvancedColumnSearchOption.push({
+            ColumnName: this.Columns.TableColumn[i].ColumnName,
+            Value: { start: "", End: "" }
+
+            , FilterType: "Array"
+          })
+        } else {
+          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
         }
       }
-
+      console.log(this.AdvancedColumnSearchOption)
       this.GetData()
 
     });
@@ -115,21 +123,24 @@ export class CustomtableComponent implements OnInit {
     });
   }
   OnKeyUpAdvColSearch() {
+    this.GetData();
     console.log(this.AdvancedColumnSearchOption)
   }
   OnChangeAdvColSearch() {
+    this.GetData();
     console.log(this.AdvancedColumnSearchOption)
   }
 
   GetData() {
     this.http.GetUserData(this.TableSetting).subscribe(a => {
+      console.log(a)
       this.collection = []
       for (let i = 1; i <= a.totoalcount; i++) {
         this.collection.push(i);
       }
       this.tabledata = a.data
-      $('select').material_select()
       this.config.itemsPerPage = this.TableSetting.length
+      //console.log(this.TableSetting)
     })
 
   }
