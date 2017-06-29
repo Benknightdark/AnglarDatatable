@@ -115,8 +115,16 @@ export class CustomtableComponent implements OnInit {
 
       $('select').material_select()
       $('select').change((e) => {
-        this.AdvancedColumnSearchOption[$(e.currentTarget)[0].attributes["ng-reflect-name"].value] = e.currentTarget.value;
+        for (let i=0;i<this.AdvancedColumnSearchOption.length;i++){
+          if(this.AdvancedColumnSearchOption[i].ColumnName==$(e.currentTarget)[0].attributes["ng-reflect-name"].value){
+            this.AdvancedColumnSearchOption[i].Value = e.currentTarget.value;
+          }
+        }
+        //$(e.currentTarget)[0].attributes["ng-reflect-name"].value
+        //this.AdvancedColumnSearchOption[] = e.currentTarget.value;
+       this.GetData();
         console.log(this.AdvancedColumnSearchOption)
+
       });
 
 

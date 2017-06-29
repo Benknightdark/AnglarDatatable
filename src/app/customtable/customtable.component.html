@@ -28,10 +28,11 @@
       </div>
       <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
         <div class="col">
-          <input [id]="c.ColumnName+'-start'" type="date"  [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
+          <input [id]="c.ColumnName+'-start'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
+
         </div>
-        <div class="col">~</div>
+
         <div class="col">
           <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
@@ -40,19 +41,13 @@
       <div *ngIf="c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
         <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" (keyup)="OnKeyUpAdvColSearch()">
         <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
-
       </div>
-
-
     </div>
-
     <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
-
       <!--class="browser-default"-->
       <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName" (change)="OnChangeAdvColSearch()">
       <option value=""  selected></option>
       <option *ngFor="let item of Columns.AdvancedColumnSearchOptions[c.ColumnName]" [value]="item" >{{item}}</option>
-
     </select>
       <label> {{c.ColumnTitle}}</label>
     </div>

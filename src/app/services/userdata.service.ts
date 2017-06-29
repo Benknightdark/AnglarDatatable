@@ -13,9 +13,9 @@ export class UserdataService {
     // tslint:disable-next-line:max-line-length
     return this.http.post('http://localhost:5566/ApiUserData/ReturnInfoFabUsers',
       JSON.stringify(TableSetting), this.JSONoptions)
-      .map(m => m.json())
+      .map(m => m.json()).share()
   }
   GetUserDataColumnsInfo() {
-    return this.http.get('http://localhost:5566/ApiUserData/GetColumnInfo').map(m => m.json()[0])
+    return this.http.get('http://localhost:5566/ApiUserData/GetColumnInfo').map(m => m.json()[0]).share()
   }
 }
