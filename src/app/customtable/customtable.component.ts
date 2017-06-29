@@ -35,7 +35,7 @@ export class CustomtableComponent implements OnInit {
       KeyWordSearch: "",
       OrderRule: "",
       SelectedColumn: "",
-      // CustomAdvancedColumnSearch: this.CustomAdvancedColumnSearch
+       CustomAdvancedColumnSearch: this.AdvancedColumnSearchOption
     };
 
     this.ShowDataCount = [10, 40, 50, 100]
