@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
 import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 import { environment } from '../../environments/environment';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs'
 @Component({
   selector: 'app-customtable',
   templateUrl: './customtable.component.html',
@@ -11,10 +12,12 @@ import { environment } from '../../environments/environment';
 })
 
 export class CustomtableComponent implements OnInit {
+  ScreenWidth
   //table and columns
   tabledata
   TableSetting: any
   Columns;
+  ShowTable: boolean = true;
 
   //paging group
   config: PaginationInstance
@@ -28,7 +31,14 @@ export class CustomtableComponent implements OnInit {
   constructor(private http: UserdataService, private ngZone: NgZone) { }
 
   ngOnInit() {
-
+    this.ScreenWidth = document.documentElement.clientWidth;
+    Observable.fromEvent(window, 'resize')
+      .map(() => {
+        return document.documentElement.clientWidth;
+      })
+      .subscribe(data => {
+        this.ScreenWidth = data
+      });
     this.TableSetting = {
       start: 0,
       length: 10,
@@ -84,11 +94,9 @@ export class CustomtableComponent implements OnInit {
   }
   KeyWordSearch(keyword) {
     this.TableSetting.KeyWordSearch = keyword;
-    console.log(keyword)
     this.GetData()
   }
   SortTable(Column) {
-
     if (this.TableSetting.OrderRule == "" || this.TableSetting.OrderRule == "DESC") {
       this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "ASC"
@@ -96,10 +104,7 @@ export class CustomtableComponent implements OnInit {
       this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "DESC"
     }
-    console.log(this.TableSetting)
     this.GetData();
-
-
   }
   CheckAdvancedSearch(ColumnName) {
 
@@ -108,41 +113,34 @@ export class CustomtableComponent implements OnInit {
   ShowAdvancedColumnSearchForm() {
     this.ShowAdvancedColumnSearch = !this.ShowAdvancedColumnSearch;
     this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
-
       $('select').material_select()
       $('select').change((e) => {
-        for (let i=0;i<this.AdvancedColumnSearchOption.length;i++){
-          if(this.AdvancedColumnSearchOption[i].ColumnName==$(e.currentTarget)[0].attributes["ng-reflect-name"].value){
+        for (let i = 0; i < this.AdvancedColumnSearchOption.length; i++) {
+          if (this.AdvancedColumnSearchOption[i].ColumnName == $(e.currentTarget)[0].attributes["ng-reflect-name"].value) {
             this.AdvancedColumnSearchOption[i].Value = e.currentTarget.value;
           }
         }
-        //$(e.currentTarget)[0].attributes["ng-reflect-name"].value
-        //this.AdvancedColumnSearchOption[] = e.currentTarget.value;
-       this.GetData();
-        console.log(this.AdvancedColumnSearchOption)
-
+        this.GetData();
       });
-
-
     });
   }
   OnKeyUpAdvColSearch() {
     this.GetData();
-    console.log(this.AdvancedColumnSearchOption)
   }
   OnChangeAdvColSearch() {
     this.GetData();
-    console.log(this.AdvancedColumnSearchOption)
   }
   GetData() {
+    this.ShowTable = !this.ShowTable
     this.http.GetUserData(this.TableSetting).subscribe(a => {
-      console.log(a)
+
       this.collection = []
       for (let i = 1; i <= a.totoalcount; i++) {
         this.collection.push(i);
       }
       this.tabledata = a.data
       this.config.itemsPerPage = this.TableSetting.length
+      this.ShowTable = !this.ShowTable
       //console.log(this.TableSetting)
     })
 

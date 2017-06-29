@@ -14,25 +14,17 @@
     <label for="icon_prefix">關鍵字搜尋</label>
   </div>
 </div>
+
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
-  <div *ngFor="let c of Columns?.TableColumn;let i=index" class="input-field col s3">
+  <div *ngFor="let c of Columns?.TableColumn;let i=index" class="input-field col " [class.s3]="ScreenWidth>1700" [class.s12]="ScreenWidth<1700" >
     <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
-      <!--<div *ngIf="c.ColumnType=='Boolean'">
-        <select [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" [name]="c.ColumnName">
-            <option value=""  selected></option>
-            <option value="true">是</option>
-            <option value="false">否</option>
-          </select>
-        <label> {{c.ColumnTitle}}</label>
-      </div>-->
       <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
         <div class="col">
           <input [id]="c.ColumnName+'-start'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
-
         </div>
-
+         <div class="col">~</div>
         <div class="col">
           <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
@@ -55,8 +47,22 @@
   </div>
   <!--{{AdvancedColumnSearchOption|json}}-->
 </div>
+<!--Preloader-->
+<div class="preloader-wrapper big active" *ngIf="!ShowTable">
+  <div class="spinner-layer spinner-blue-only">
+    <div class="circle-clipper left">
+      <div class="circle"></div>
+    </div>
+    <div class="gap-patch">
+      <div class="circle"></div>
+    </div>
+    <div class="circle-clipper right">
+      <div class="circle"></div>
+    </div>
+  </div>
+</div>
 <!--TableData-->
-<div class="row">
+<div class="row" *ngIf="ShowTable">
   <div class="TableScroll">
     <table class="bordered striped">
       <thead>
