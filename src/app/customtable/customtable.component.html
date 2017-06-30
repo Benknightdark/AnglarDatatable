@@ -4,16 +4,13 @@
   <div class="modal-content">
     <h4>欄位設定</h4>
     <ul class="sortable">
-      <li *ngFor="let column of Columns?.TableColumn" [class.disabled]="!column.IsVisible" [id]="column.SortSeq"
+      <li *ngFor="let column of Columns?.TableColumn" [class.disabled]="!column.IsVisible" [id]="column.ColumnName"
        (dragend)="ColumnSettingDragend($event)"
-       (dragstart)="ColumnSettingDragstart($event)"
 
-       (dragenter)="ColumnSettingDragover($event)"
-       (dragleave)="ColumnSettingDragleave($event)"
        >
         <i class="material-icons">drag_handle</i>
-        <input type="checkbox" [id]="column.ColumnName" [(ngModel)]="column.IsVisible" (change)="ColumnSettingChanged()" />
-        <label [for]="column.ColumnName">   {{column.ColumnTitle}}</label>
+        <input type="checkbox" [id]="column.SortSeq" [(ngModel)]="column.IsVisible" (change)="ColumnSettingChanged()" />
+        <label [for]="column.SortSeq">   {{column.ColumnTitle}}</label>
       </li>
     </ul>
   </div>

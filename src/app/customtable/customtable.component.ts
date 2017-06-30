@@ -54,7 +54,7 @@ export class CustomtableComponent implements OnInit {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
     }
-this.GetUserDataColumnsInfo();
+    this.GetUserDataColumnsInfo();
 
   }
   ChangeDataCount(length) {
@@ -119,35 +119,56 @@ this.GetUserDataColumnsInfo();
 
     $('.modal').modal('open');
     $('.sortable').sortable().sortable({
-       items: ':not(.disabled)',
+      items: ':not(.disabled)',
       handle: 'i',
 
-    }).bind('sortupdate', function (d) {
-      //console.log(d)
-
-    });
+    })
   }
   ColumnSettingChanged() {
     this.GetData();
   }
-  ColumnSettingDragend(e){
-console.log("end",$(e.target).attr("id"))
-  }
-  ColumnSettingDragstart(e){
-    console.log("start",$(e.target).attr("id"))
+  ColumnSettingDragend(e) {
+    const ColumnArray = []
+    for (let i = 0; i < $($(e.path[1])[0])[0].children.length; i++) {
+      console.log($($(e.path[1])[0])[0].children[i].id)
+      ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
+    }
+
+    this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
+      $('.modal').modal();
+      this.Columns = data;
+      this.AdvancedColumnSearchOption = []
+      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
+          this.AdvancedColumnSearchOption.push({
+            ColumnName: this.Columns.TableColumn[i].ColumnName,
+            Value: { start: "", End: "" }
+            , FilterType: "Array"
+          })
+        } else {
+          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
+        }
+      }
+      this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
+
+        $('.sortable').sortable().sortable({
+          items: ':not(.disabled)',
+          handle: 'i',
+        })
+      })
+
+      this.GetData()
+
+    });
+
 
   }
-  ColumnSettingDragover(e){
-     console.log("over",$(e.target).attr("id"))
-  }
-    ColumnSettingDragleave(e){
-     console.log("leave",$(e.target).attr("id"))
-  }
-  GetUserDataColumnsInfo(){
+
+  GetUserDataColumnsInfo() {
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       $('.modal').modal();
       this.Columns = data;
-      this.AdvancedColumnSearchOption=[]
+      this.AdvancedColumnSearchOption = []
       for (let i = 0; i < this.Columns.TableColumn.length; i++) {
         if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
           this.AdvancedColumnSearchOption.push({

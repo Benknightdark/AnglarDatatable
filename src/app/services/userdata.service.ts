@@ -18,4 +18,8 @@ export class UserdataService {
   GetUserDataColumnsInfo() {
     return this.http.get('http://localhost:5566/ApiUserData/GetColumnInfo').map(m => m.json()[0]).share()
   }
+  PostUserDataColumnsInfo(ColumnInfo) {
+    return this.http.post('http://localhost:5566/ApiUserData/UpdateColumnInfo',
+      JSON.stringify(ColumnInfo), this.JSONoptions).map(m => m.json()[0]).share()
+  }
 }
