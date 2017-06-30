@@ -125,45 +125,26 @@ export class CustomtableComponent implements OnInit {
     })
   }
   ColumnSettingChanged() {
+
     this.GetData();
   }
   ColumnSettingDragend(e) {
     const ColumnArray = []
     for (let i = 0; i < $($(e.path[1])[0])[0].children.length; i++) {
       console.log($($(e.path[1])[0])[0].children[i].id)
-      ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
+    //  ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
+       for (let j = 0; j < this.Columns.TableColumn.length; j++) {
+            if(this.Columns.TableColumn[j].ColumnName==$($(e.path[1])[0])[0].children[i].id){
+              this.Columns.TableColumn[j].SortSeq=i+1;
+            }
+       }
+
+
+
     }
-
-    this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
-      $('.modal').modal();
-      this.Columns = data;
-      this.AdvancedColumnSearchOption = []
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
-      this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
-
-        $('.sortable').sortable().sortable({
-          items: ':not(.disabled)',
-          handle: 'i',
-        })
-      })
-
-      this.GetData()
-
-    });
-
+    this.PostUserDataColumnsInfo( this.Columns.TableColumn)
 
   }
-
   GetUserDataColumnsInfo() {
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       $('.modal').modal();
@@ -184,6 +165,31 @@ export class CustomtableComponent implements OnInit {
       this.GetData()
     });
   }
+  PostUserDataColumnsInfo(ColumnArray) {
+    this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
+      $('.modal').modal();
+      this.Columns = data;
+      this.AdvancedColumnSearchOption = []
+      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
+          this.AdvancedColumnSearchOption.push({
+            ColumnName: this.Columns.TableColumn[i].ColumnName,
+            Value: { start: "", End: "" }
+            , FilterType: "Array"
+          })
+        } else {
+          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
+        }
+      }
+      this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
+        $('.sortable').sortable().sortable({
+          items: ':not(.disabled)',
+          handle: 'i',
+        })
+      })
+      this.GetData()
+    });
+  }
   GetData() {
     this.ShowTable = !this.ShowTable
     this.http.GetUserData(this.TableSetting).subscribe(a => {
@@ -195,7 +201,6 @@ export class CustomtableComponent implements OnInit {
       this.tabledata = a.data
       this.config.itemsPerPage = this.TableSetting.length
       this.ShowTable = !this.ShowTable
-      //console.log(this.TableSetting)
     })
 
   }
