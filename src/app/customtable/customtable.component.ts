@@ -5,6 +5,7 @@ import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs'
+
 @Component({
   selector: 'app-customtable',
   templateUrl: './customtable.component.html',
@@ -55,8 +56,9 @@ export class CustomtableComponent implements OnInit {
     }
 
     this.http.GetUserDataColumnsInfo().subscribe(data => {
+      $('.modal').modal();
+
       this.Columns = data;
-      console.log(this.Columns)
       for (let i = 0; i < this.Columns.TableColumn.length; i++) {
         if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
           this.AdvancedColumnSearchOption.push({
@@ -70,7 +72,6 @@ export class CustomtableComponent implements OnInit {
       }
       console.log(this.AdvancedColumnSearchOption)
       this.GetData()
-
     });
   }
   ChangeDataCount(length) {
@@ -129,6 +130,11 @@ export class CustomtableComponent implements OnInit {
   }
   OnChangeAdvColSearch() {
     this.GetData();
+  }
+  ShowColumnsSettingModal() {
+
+    $('.modal').modal('open');
+       $('.sortable').sortable();
   }
   GetData() {
     this.ShowTable = !this.ShowTable
