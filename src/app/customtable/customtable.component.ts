@@ -54,24 +54,8 @@ export class CustomtableComponent implements OnInit {
       itemsPerPage: this.TableSetting.length,
       currentPage: 1
     }
+this.GetUserDataColumnsInfo();
 
-    this.http.GetUserDataColumnsInfo().subscribe(data => {
-      $('.modal').modal();
-      this.Columns = data;
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
-      console.log(this.Columns)
-      this.GetData()
-    });
   }
   ChangeDataCount(length) {
     console.log(length)
@@ -146,8 +130,38 @@ export class CustomtableComponent implements OnInit {
   ColumnSettingChanged() {
     this.GetData();
   }
-  ColumnSettingDraged(e){
-console.log(e)
+  ColumnSettingDragend(e){
+console.log("end",$(e.target).attr("id"))
+  }
+  ColumnSettingDragstart(e){
+    console.log("start",$(e.target).attr("id"))
+
+  }
+  ColumnSettingDragover(e){
+     console.log("over",$(e.target).attr("id"))
+  }
+    ColumnSettingDragleave(e){
+     console.log("leave",$(e.target).attr("id"))
+  }
+  GetUserDataColumnsInfo(){
+    this.http.GetUserDataColumnsInfo().subscribe(data => {
+      $('.modal').modal();
+      this.Columns = data;
+      this.AdvancedColumnSearchOption=[]
+      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
+          this.AdvancedColumnSearchOption.push({
+            ColumnName: this.Columns.TableColumn[i].ColumnName,
+            Value: { start: "", End: "" }
+            , FilterType: "Array"
+          })
+        } else {
+          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
+        }
+      }
+      console.log(this.Columns)
+      this.GetData()
+    });
   }
   GetData() {
     this.ShowTable = !this.ShowTable
