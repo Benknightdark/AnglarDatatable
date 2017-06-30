@@ -57,7 +57,6 @@ export class CustomtableComponent implements OnInit {
 
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       $('.modal').modal();
-
       this.Columns = data;
       for (let i = 0; i < this.Columns.TableColumn.length; i++) {
         if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
@@ -70,7 +69,7 @@ export class CustomtableComponent implements OnInit {
           this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
         }
       }
-      console.log(this.AdvancedColumnSearchOption)
+      console.log(this.Columns)
       this.GetData()
     });
   }
@@ -131,10 +130,17 @@ export class CustomtableComponent implements OnInit {
   OnChangeAdvColSearch() {
     this.GetData();
   }
+
   ShowColumnsSettingModal() {
 
     $('.modal').modal('open');
-       $('.sortable').sortable();
+    $('.sortable').sortable().sortable().bind('sortupdate', function (d) {
+        console.log(d)
+
+    });
+  }
+  ColumnSettingChanged(){
+    this.GetData();
   }
   GetData() {
     this.ShowTable = !this.ShowTable

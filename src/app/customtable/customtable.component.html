@@ -7,7 +7,7 @@
 <ul class="sortable ">
     <li *ngFor="let column of Columns?.TableColumn" >
       <i class="material-icons">drag_handle</i>
-       <input type="checkbox" [id]="column.ColumnName" />
+       <input type="checkbox" [id]="column.ColumnName" [(ngModel)]="column.IsVisible" (change)="ColumnSettingChanged()"/>
       <label [for]="column.ColumnName">   {{column.ColumnTitle}}</label>
 
 
@@ -17,8 +17,7 @@
 
   </div>
   <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">儲存</a>
-    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">取消</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">關閉</a>
   </div>
 </div>
 <!--Table function-->
@@ -90,7 +89,7 @@
         <tr>
           <th style="background-color:yellow"></th>
           <th *ngFor="let column of Columns?.TableColumn" style="background-color:yellow">
-            <div style="display: inline-block; width: 150px;" (click)="SortTable(column)">
+            <div style="display: inline-block; width: 150px;" (click)="SortTable(column)" *ngIf="column.IsVisible" >
               {{column.ColumnTitle}}
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='DESC' &&TableSetting.SelectedColumn==column.ColumnName">expand_less</i>
               <i class="material-icons" *ngIf="TableSetting.OrderRule=='ASC' &&TableSetting.SelectedColumn==column.ColumnName">expand_more</i>
@@ -106,6 +105,8 @@
             <a class="btn-floating  waves-effect waves-light red btn-smal" (click)="Delete(item.ID)"> <i class="material-icons">delete</i></a>
           </td>
           <td *ngFor="let c of Columns?.TableColumn">
+            <div *ngIf="c.IsVisible">
+
             <div *ngIf="c.ColumnType=='Date'">
               {{item[c.ColumnName]|date: 'yyyy/MM/dd'}}
             </div>
@@ -115,6 +116,7 @@
             <div *ngIf="c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
               {{item[c.ColumnName]}}
             </div>
+              </div>
           </td>
         </tr>
       </tbody>
