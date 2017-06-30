@@ -139,12 +139,15 @@ export class CustomtableComponent implements OnInit {
       handle: 'i',
 
     }).bind('sortupdate', function (d) {
-      console.log(d)
+      //console.log(d)
 
     });
   }
   ColumnSettingChanged() {
     this.GetData();
+  }
+  ColumnSettingDraged(e){
+console.log(e)
   }
   GetData() {
     this.ShowTable = !this.ShowTable
