@@ -23,10 +23,6 @@ th {
   cursor: hand;
 }
 
-.sortable.grid {
-  overflow: hidden;
-}
-
 .connected li,
 .sortable li,
 .exclude li,
@@ -41,36 +37,24 @@ th {
   height: 22px;
 }
 
-.sortable.grid li i {
-  cursor: move;
-}
 .sortable li i {
   cursor: move;
+
 }
+
 li.disabled {
   opacity: 0.5;
 }
-.sortable li {
 
+.sortable li {
   width: 100%;
   height: 100%;
   text-align: left;
-
-}
-.sortable.grid li {
-  line-height: 100%;
-  float: left;
-  width: 20%;
-  height: 100%;
-  text-align: left;
-
 }
 
 li.highlight {
   background: #FEE25F;
 }
-
-
 
 li.sortable-placeholder {
   border: 1px dashed #CCC;

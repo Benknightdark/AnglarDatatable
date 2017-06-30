@@ -134,12 +134,16 @@ export class CustomtableComponent implements OnInit {
   ShowColumnsSettingModal() {
 
     $('.modal').modal('open');
-    $('.sortable').sortable().sortable().bind('sortupdate', function (d) {
-        console.log(d)
+    $('.sortable').sortable().sortable({
+       items: ':not(.disabled)',
+      handle: 'i',
+
+    }).bind('sortupdate', function (d) {
+      console.log(d)
 
     });
   }
-  ColumnSettingChanged(){
+  ColumnSettingChanged() {
     this.GetData();
   }
   GetData() {
