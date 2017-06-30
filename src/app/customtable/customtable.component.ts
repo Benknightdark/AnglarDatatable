@@ -132,17 +132,17 @@ export class CustomtableComponent implements OnInit {
     const ColumnArray = []
     for (let i = 0; i < $($(e.path[1])[0])[0].children.length; i++) {
       console.log($($(e.path[1])[0])[0].children[i].id)
-    //  ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
-       for (let j = 0; j < this.Columns.TableColumn.length; j++) {
-            if(this.Columns.TableColumn[j].ColumnName==$($(e.path[1])[0])[0].children[i].id){
-              this.Columns.TableColumn[j].SortSeq=i+1;
-            }
-       }
+      //  ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
+      for (let j = 0; j < this.Columns.TableColumn.length; j++) {
+        if (this.Columns.TableColumn[j].ColumnName == $($(e.path[1])[0])[0].children[i].id) {
+          this.Columns.TableColumn[j].SortSeq = i + 1;
+        }
+      }
 
 
 
     }
-    this.PostUserDataColumnsInfo( this.Columns.TableColumn)
+    this.PostUserDataColumnsInfo(this.Columns.TableColumn)
 
   }
   GetUserDataColumnsInfo() {
