@@ -48,7 +48,6 @@ export class CustomtableComponent implements OnInit {
       SelectedColumn: "",
       CustomAdvancedColumnSearch: this.AdvancedColumnSearchOption
     };
-
     this.ShowDataCount = [10, 40, 50, 100]
     this.config = {
       itemsPerPage: this.TableSetting.length,

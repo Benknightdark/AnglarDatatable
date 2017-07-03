@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JquerydatatableComponent } from './jquerydatatable.component';
+import { TestableComponent } from './testable.component';
 
-describe('JquerydatatableComponent', () => {
-  let component: JquerydatatableComponent;
-  let fixture: ComponentFixture<JquerydatatableComponent>;
+describe('TestableComponent', () => {
+  let component: TestableComponent;
+  let fixture: ComponentFixture<TestableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JquerydatatableComponent ]
+      declarations: [ TestableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JquerydatatableComponent);
+    fixture = TestBed.createComponent(TestableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
