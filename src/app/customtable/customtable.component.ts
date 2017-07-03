@@ -18,25 +18,26 @@ export class CustomtableComponent implements OnInit {
   @Input() TableSetting: any
   @Input() Columns;
   @Input() ShowTable: boolean
-  @Output() KeyWordSearchEvent = new EventEmitter();
-  @Output() SortTableEvent = new EventEmitter()
+
+  @Output() OnGetData = new EventEmitter()
 
   //paging group
   @Input() config//: PaginationInstance
   @Input() collection
-  @Output() PageChangeEvent = new EventEmitter();
-  @Output() ChangeDataCountEvent = new EventEmitter();
+
   ShowDataCount = [];
 
   //AdvancedColumnSearch
   @Input() AdvancedColumnSearchOption;
   @Output() AdvSearchEvent = new EventEmitter();
   ShowAdvancedColumnSearch: boolean = false;
-  constructor(private http: UserdataService, private ngZone: NgZone) { }
+
 
   //ColumnSetting
   @Output() ColumnSettingChangedEvent = new EventEmitter();
-  @Output() ColumnSettingDragendEvent=new EventEmitter();
+  @Output() ColumnSettingDragendEvent = new EventEmitter();
+
+  constructor(private ngZone: NgZone) { }
   ngOnInit() {
     this.ScreenWidth = document.documentElement.clientWidth;
     Observable.fromEvent(window, 'resize')
@@ -46,18 +47,12 @@ export class CustomtableComponent implements OnInit {
       .subscribe(data => {
         this.ScreenWidth = data
       });
-
-
-
     this.ShowDataCount = [10, 40, 50, 100]
   }
   ChangeDataCount(length) {
     this.TableSetting.length = length
     this.config.itemsPerPage = this.TableSetting.length
-    console.log(this.TableSetting)
-    console.log(this.config)
-    this.ChangeDataCountEvent.emit(this.config)
-
+    this.OnGetData.emit(this.config)
   }
   Detail(id) { console.log("detail", id) }
   Edit(id) { console.log("Edit", id) }
@@ -66,15 +61,15 @@ export class CustomtableComponent implements OnInit {
     this.config.currentPage = number;
     if (this.config.currentPage === 1) {
       this.TableSetting.start = 0
-      this.PageChangeEvent.emit({ s: this.TableSetting.start })
+      this.OnGetData.emit({ s: this.TableSetting.start })
     } else {
       this.TableSetting.start = (number - 1) * this.TableSetting.length
-      this.PageChangeEvent.emit({ s: this.TableSetting.start })
+      this.OnGetData.emit({ s: this.TableSetting.start })
     }
   }
   KeyWordSearch(keyword) {
     this.TableSetting.KeyWordSearch = keyword;
-    this.KeyWordSearchEvent.emit(this.TableSetting.KeyWordSearch)
+    this.OnGetData.emit(this.TableSetting.KeyWordSearch)
   }
   SortTable(Column) {
     if (this.TableSetting.OrderRule == "" || this.TableSetting.OrderRule == "DESC") {
@@ -84,7 +79,7 @@ export class CustomtableComponent implements OnInit {
       this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "DESC"
     }
-    this.SortTableEvent.emit(this.TableSetting.OrderRule)
+    this.OnGetData.emit(this.TableSetting.OrderRule)
   }
   CheckAdvancedSearch(ColumnName) {
     return typeof this.Columns.AdvancedColumnSearchOptions[ColumnName] === 'undefined'
@@ -109,7 +104,6 @@ export class CustomtableComponent implements OnInit {
   OnChangeAdvColSearch() {
     this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
   }
-
   ShowColumnsSettingModal() {
 
     $('.modal').modal('open');
@@ -120,7 +114,7 @@ export class CustomtableComponent implements OnInit {
     })
   }
   ColumnSettingChanged() {
-    this.ColumnSettingChangedEvent.emit()
+    this.OnGetData.emit()
   }
   ColumnSettingDragend(e) {
     const ColumnArray = []
@@ -133,10 +127,7 @@ export class CustomtableComponent implements OnInit {
         }
       }
     }
-  //  this.PostUserDataColumnsInfo(this.Columns.TableColumn)
-  this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
+    //  this.PostUserDataColumnsInfo(this.Columns.TableColumn)
+    this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
   }
-
-
-
 }

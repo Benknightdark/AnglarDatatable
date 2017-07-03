@@ -65,6 +65,9 @@ export class TestableComponent implements OnInit {
     })
 
   }
+  OnGetDataEvent(event) {
+    this.GetData()
+  }
   OnColumnSettingDragendEvent(ColumnArray) {
     this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
       $('.modal').modal();
@@ -90,23 +93,9 @@ export class TestableComponent implements OnInit {
       //   this.GetData()
     });
   }
-  OnPageChangeEvent(event) {
-    this.GetData()
-  }
-  OnChangeDataCountEvent(event) {
-    this.GetData();
-  }
-  OnKeyWordSearchEvent(event) {
-    this.GetData();
-  }
-  OnSortTableEvent(event) {
-    this.GetData();
-  }
   OnAdvSearchEvent(event) {
     this.TableSetting.CustomAdvancedColumnSearch = event;
     this.GetData();
   }
-  OnColumnSettingChangedEvent(event) {
-    this.GetData();
-  }
+
 }
