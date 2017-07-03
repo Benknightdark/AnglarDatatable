@@ -40,6 +40,7 @@ export class CustomtableComponent implements OnInit {
       .subscribe(data => {
         this.ScreenWidth = data
       });
+    //分頁數量集合
     this.ShowDataCount = [10, 40, 50, 100]
   }
   //分頁按鈕
@@ -117,15 +118,13 @@ export class CustomtableComponent implements OnInit {
   ColumnSettingDragend(e) {
     const ColumnArray = []
     for (let i = 0; i < $($(e.path[1])[0])[0].children.length; i++) {
-      // console.log($($(e.path[1])[0])[0].children[i].id)
-      //  ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
+
       for (let j = 0; j < this.Columns.TableColumn.length; j++) {
         if (this.Columns.TableColumn[j].ColumnName == $($(e.path[1])[0])[0].children[i].id) {
           this.Columns.TableColumn[j].SortSeq = i + 1;
         }
       }
     }
-    //  this.PostUserDataColumnsInfo(this.Columns.TableColumn)
     this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
   }
   //CRUD按鈕

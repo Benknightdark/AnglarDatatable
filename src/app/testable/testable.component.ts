@@ -69,7 +69,6 @@ export class TestableComponent implements OnInit {
 
   OnColumnSettingDragendEvent(ColumnArray) {
     this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
-      $('.modal').modal();
       this.Columns = data;
       this.AdvancedColumnSearchOption = []
       for (let i = 0; i < this.Columns.TableColumn.length; i++) {
