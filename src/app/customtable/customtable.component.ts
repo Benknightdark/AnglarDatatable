@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { UserdataService } from '../services/userdata.service';
-import { PaginationInstance } from "ngx-pagination/dist/pagination-instance";
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs'
@@ -15,22 +14,29 @@ import 'rxjs'
 export class CustomtableComponent implements OnInit {
   ScreenWidth
   //table and columns
-  tabledata
-  TableSetting: any
-  Columns;
-  ShowTable: boolean = true;
+  @Input() tabledata
+  @Input() TableSetting: any
+  @Input() Columns;
+  @Input() ShowTable: boolean
+  @Output() KeyWordSearchEvent = new EventEmitter();
+  @Output() SortTableEvent = new EventEmitter()
 
   //paging group
-  config: PaginationInstance
-  collection = [];
+  @Input() config//: PaginationInstance
+  @Input() collection
+  @Output() PageChangeEvent = new EventEmitter();
+  @Output() ChangeDataCountEvent = new EventEmitter();
   ShowDataCount = [];
 
   //AdvancedColumnSearch
-
-  AdvancedColumnSearchOption = []
+  @Input() AdvancedColumnSearchOption;
+  @Output() AdvSearchEvent = new EventEmitter();
   ShowAdvancedColumnSearch: boolean = false;
   constructor(private http: UserdataService, private ngZone: NgZone) { }
 
+  //ColumnSetting
+  @Output() ColumnSettingChangedEvent = new EventEmitter();
+  @Output() ColumnSettingDragendEvent=new EventEmitter();
   ngOnInit() {
     this.ScreenWidth = document.documentElement.clientWidth;
     Observable.fromEvent(window, 'resize')
@@ -40,27 +46,17 @@ export class CustomtableComponent implements OnInit {
       .subscribe(data => {
         this.ScreenWidth = data
       });
-    this.TableSetting = {
-      start: 0,
-      length: 10,
-      KeyWordSearch: "",
-      OrderRule: "",
-      SelectedColumn: "",
-      CustomAdvancedColumnSearch: this.AdvancedColumnSearchOption
-    };
-    this.ShowDataCount = [10, 40, 50, 100]
-    this.config = {
-      itemsPerPage: this.TableSetting.length,
-      currentPage: 1
-    }
-    this.GetUserDataColumnsInfo();
 
+
+
+    this.ShowDataCount = [10, 40, 50, 100]
   }
   ChangeDataCount(length) {
-    console.log(length)
     this.TableSetting.length = length
     this.config.itemsPerPage = this.TableSetting.length
-    this.GetData();
+    console.log(this.TableSetting)
+    console.log(this.config)
+    this.ChangeDataCountEvent.emit(this.config)
 
   }
   Detail(id) { console.log("detail", id) }
@@ -70,14 +66,15 @@ export class CustomtableComponent implements OnInit {
     this.config.currentPage = number;
     if (this.config.currentPage === 1) {
       this.TableSetting.start = 0
+      this.PageChangeEvent.emit({ s: this.TableSetting.start })
     } else {
       this.TableSetting.start = (number - 1) * this.TableSetting.length
+      this.PageChangeEvent.emit({ s: this.TableSetting.start })
     }
-    this.GetData()
   }
   KeyWordSearch(keyword) {
     this.TableSetting.KeyWordSearch = keyword;
-    this.GetData()
+    this.KeyWordSearchEvent.emit(this.TableSetting.KeyWordSearch)
   }
   SortTable(Column) {
     if (this.TableSetting.OrderRule == "" || this.TableSetting.OrderRule == "DESC") {
@@ -87,10 +84,9 @@ export class CustomtableComponent implements OnInit {
       this.TableSetting.SelectedColumn = Column.ColumnName;
       this.TableSetting.OrderRule = "DESC"
     }
-    this.GetData();
+    this.SortTableEvent.emit(this.TableSetting.OrderRule)
   }
   CheckAdvancedSearch(ColumnName) {
-
     return typeof this.Columns.AdvancedColumnSearchOptions[ColumnName] === 'undefined'
   }
   ShowAdvancedColumnSearchForm() {
@@ -101,17 +97,17 @@ export class CustomtableComponent implements OnInit {
         for (let i = 0; i < this.AdvancedColumnSearchOption.length; i++) {
           if (this.AdvancedColumnSearchOption[i].ColumnName == $(e.currentTarget)[0].attributes["ng-reflect-name"].value) {
             this.AdvancedColumnSearchOption[i].Value = e.currentTarget.value;
+            this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
           }
         }
-        this.GetData();
       });
     });
   }
   OnKeyUpAdvColSearch() {
-    this.GetData();
+    this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
   }
   OnChangeAdvColSearch() {
-    this.GetData();
+    this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
   }
 
   ShowColumnsSettingModal() {
@@ -124,8 +120,7 @@ export class CustomtableComponent implements OnInit {
     })
   }
   ColumnSettingChanged() {
-
-    this.GetData();
+    this.ColumnSettingChangedEvent.emit()
   }
   ColumnSettingDragend(e) {
     const ColumnArray = []
@@ -137,70 +132,11 @@ export class CustomtableComponent implements OnInit {
           this.Columns.TableColumn[j].SortSeq = i + 1;
         }
       }
-
-
-
     }
-    this.PostUserDataColumnsInfo(this.Columns.TableColumn)
+  //  this.PostUserDataColumnsInfo(this.Columns.TableColumn)
+  this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
+  }
 
-  }
-  GetUserDataColumnsInfo() {
-    this.http.GetUserDataColumnsInfo().subscribe(data => {
-      $('.modal').modal();
-      this.Columns = data;
-      this.AdvancedColumnSearchOption = []
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
-      console.log(this.Columns)
-      this.GetData()
-    });
-  }
-  PostUserDataColumnsInfo(ColumnArray) {
-    this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
-      $('.modal').modal();
-      this.Columns = data;
-      this.AdvancedColumnSearchOption = []
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
-      this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
-        $('.sortable').sortable().sortable({
-          items: ':not(.disabled)',
-          handle: 'i',
-        })
-      })
-      this.GetData()
-    });
-  }
-  GetData() {
-    this.ShowTable = !this.ShowTable
-    this.http.GetUserData(this.TableSetting).subscribe(a => {
 
-      this.collection = []
-      for (let i = 1; i <= a.totoalcount; i++) {
-        this.collection.push(i);
-      }
-      this.tabledata = a.data
-      this.config.itemsPerPage = this.TableSetting.length
-      this.ShowTable = !this.ShowTable
-    })
 
-  }
 }

@@ -1,3 +1,17 @@
-<p>
-  testable works!
-</p>
+<app-customtable
+[TableSetting]="TableSetting"
+[AdvancedColumnSearchOption]="AdvancedColumnSearchOption"
+[ShowTable]="ShowTable"
+[config]="config"
+[collection]="collection"
+[tabledata]="tabledata"
+[Columns]="Columns"
+(PageChangeEvent)="OnPageChangeEvent($event)"
+(ChangeDataCountEvent)="OnChangeDataCountEvent($event)"
+(KeyWordSearchEvent)="OnKeyWordSearchEvent($event)"
+(SortTableEvent)="OnSortTableEvent($event)"
+(AdvSearchEvent)="OnAdvSearchEvent($event)"
+(ColumnSettingChangedEvent)="OnColumnSettingChangedEvent($event)"
+(ColumnSettingDragendEvent)=(OnColumnSettingDragendEvent($event))
+>
+</app-customtable>
