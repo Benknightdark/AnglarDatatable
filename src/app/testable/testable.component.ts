@@ -65,9 +65,7 @@ export class TestableComponent implements OnInit {
     })
 
   }
-  OnGetDataEvent(event) {
-    this.GetData()
-  }
+
   OnColumnSettingDragendEvent(ColumnArray) {
     this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
       $('.modal').modal();
@@ -92,6 +90,9 @@ export class TestableComponent implements OnInit {
       })
       //   this.GetData()
     });
+  }
+  OnGetDataEvent(event) {
+    this.GetData()
   }
   OnAdvSearchEvent(event) {
     this.TableSetting.CustomAdvancedColumnSearch = event;
