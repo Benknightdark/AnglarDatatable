@@ -19,6 +19,7 @@ export class CustomtableComponent implements OnInit {
   @Input() Columns;
   @Input() ShowTable: boolean
   @Output() OnGetData = new EventEmitter()
+  @Output() RowButtonClickEvent = new EventEmitter();
   //paging group
   @Input() config//: PaginationInstance
   @Input() collection
@@ -116,7 +117,7 @@ export class CustomtableComponent implements OnInit {
   ColumnSettingDragend(e) {
     const ColumnArray = []
     for (let i = 0; i < $($(e.path[1])[0])[0].children.length; i++) {
-      console.log($($(e.path[1])[0])[0].children[i].id)
+      // console.log($($(e.path[1])[0])[0].children[i].id)
       //  ColumnArray.push($($(e.path[1])[0])[0].children[i].id)
       for (let j = 0; j < this.Columns.TableColumn.length; j++) {
         if (this.Columns.TableColumn[j].ColumnName == $($(e.path[1])[0])[0].children[i].id) {
@@ -128,7 +129,5 @@ export class CustomtableComponent implements OnInit {
     this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
   }
   //CRUD按鈕
-  Detail(id) { console.log("detail", id) }
-  Edit(id) { console.log("Edit", id) }
-  Delete(id) { console.log("Delete", id) }
+  OnClickRowButton(action,id) { this.RowButtonClickEvent.emit(action+"/" + id); }
 }

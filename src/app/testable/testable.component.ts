@@ -62,6 +62,7 @@ export class TestableComponent implements OnInit {
       this.tabledata = a.data
       this.config.itemsPerPage = this.TableSetting.length
       this.ShowTable = !this.ShowTable
+      console.log("getdata")
     })
 
   }
@@ -97,6 +98,9 @@ export class TestableComponent implements OnInit {
   OnAdvSearchEvent(event) {
     this.TableSetting.CustomAdvancedColumnSearch = event;
     this.GetData();
+  }
+  OnRowButtonClickEvent(url){
+    console.log(url)
   }
 
 }
