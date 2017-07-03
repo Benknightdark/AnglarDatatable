@@ -92,17 +92,23 @@ export class CustomtableComponent implements OnInit {
         for (let i = 0; i < this.AdvancedColumnSearchOption.length; i++) {
           if (this.AdvancedColumnSearchOption[i].ColumnName == $(e.currentTarget)[0].attributes["ng-reflect-name"].value) {
             this.AdvancedColumnSearchOption[i].Value = e.currentTarget.value;
-            this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
+                this.TableSetting.CustomAdvancedColumnSearch = this.AdvancedColumnSearchOption;
+                 this.OnGetData.emit()
+          //  this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
           }
         }
       });
     });
   }
   OnKeyUpAdvColSearch() {
-    this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
+   this.TableSetting.CustomAdvancedColumnSearch= this.AdvancedColumnSearchOption
+        this.OnGetData.emit()
+  //  this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
   }
   OnChangeAdvColSearch() {
-    this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
+      this.TableSetting.CustomAdvancedColumnSearch= this.AdvancedColumnSearchOption
+           this.OnGetData.emit()
+   // this.AdvSearchEvent.emit(this.AdvancedColumnSearchOption)
   }
   ShowColumnsSettingModal() {
 
