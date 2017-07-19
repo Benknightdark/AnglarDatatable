@@ -125,7 +125,7 @@ export class CustomtableComponent implements OnInit {
         }
       }
     }
-    this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)
+    this.ColumnSettingDragendEvent.emit(this.Columns.TableColumn)//this.Columns.TableColumn
   }
   //CRUD按鈕
   OnClickRowButton(action,id) { this.RowButtonClickEvent.emit(action+"/" + id); }

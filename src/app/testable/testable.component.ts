@@ -1,7 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { UserdataService } from "app/services/userdata.service";
 import { PaginationInstance } from "ngx-pagination/dist/ngx-pagination";
-
 @Component({
   selector: 'app-testable',
   templateUrl: './testable.component.html',
@@ -36,18 +35,20 @@ export class TestableComponent implements OnInit {
     this.http.GetUserDataColumnsInfo().subscribe(data => {
       $('.modal').modal();
       this.Columns = data;
+      console.log(this.Columns)
       this.AdvancedColumnSearchOption = []
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
+      this.AdvancedColumnSearchOption = this.Columns.AdvancedColumnSearch
+      // for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+      //   if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
+      //     this.AdvancedColumnSearchOption.push({
+      //       ColumnName: this.Columns.TableColumn[i].ColumnName,
+      //       Value: { start: "", End: "" }
+      //       , FilterType: "Array"
+      //     })
+      //   } else {
+      //     this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
+      //   }
+      // }
       this.GetData()
     });
   }
@@ -67,21 +68,23 @@ export class TestableComponent implements OnInit {
 
   }
 
-  OnColumnSettingDragendEvent(ColumnArray) {
-    this.http.PostUserDataColumnsInfo(ColumnArray).subscribe(data => {
+  OnColumnSettingDragendEvent(TableColumn) {
+    this.http.PostUserDataColumnsInfo(TableColumn).subscribe(data => {
       this.Columns = data;
+      console.log(this.Columns)
       this.AdvancedColumnSearchOption = []
-      for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-        if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-          this.AdvancedColumnSearchOption.push({
-            ColumnName: this.Columns.TableColumn[i].ColumnName,
-            Value: { start: "", End: "" }
-            , FilterType: "Array"
-          })
-        } else {
-          this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-        }
-      }
+      this.AdvancedColumnSearchOption = this.Columns.AdvancedColumnSearch
+      // for (let i = 0; i < this.Columns.TableColumn.length; i++) {
+      //   if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
+      //     this.AdvancedColumnSearchOption.push({
+      //       ColumnName: this.Columns.TableColumn[i].ColumnName,
+      //       Value: { start: "", End: "" }
+      //       , FilterType: "Array"
+      //     })
+      //   } else {
+      //     this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
+      //   }
+      // }
       this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
         $('.sortable').sortable().sortable({
           items: ':not(.disabled)',
