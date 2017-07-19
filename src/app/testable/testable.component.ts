@@ -38,17 +38,7 @@ export class TestableComponent implements OnInit {
       console.log(this.Columns)
       this.AdvancedColumnSearchOption = []
       this.AdvancedColumnSearchOption = this.Columns.AdvancedColumnSearch
-      // for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-      //   if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-      //     this.AdvancedColumnSearchOption.push({
-      //       ColumnName: this.Columns.TableColumn[i].ColumnName,
-      //       Value: { start: "", End: "" }
-      //       , FilterType: "Array"
-      //     })
-      //   } else {
-      //     this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-      //   }
-      // }
+
       this.GetData()
     });
   }
@@ -74,24 +64,14 @@ export class TestableComponent implements OnInit {
       console.log(this.Columns)
       this.AdvancedColumnSearchOption = []
       this.AdvancedColumnSearchOption = this.Columns.AdvancedColumnSearch
-      // for (let i = 0; i < this.Columns.TableColumn.length; i++) {
-      //   if (this.Columns.TableColumn[i].ColumnType == 'Date' || this.Columns.TableColumn[i].ColumnType == 'DateTime') {
-      //     this.AdvancedColumnSearchOption.push({
-      //       ColumnName: this.Columns.TableColumn[i].ColumnName,
-      //       Value: { start: "", End: "" }
-      //       , FilterType: "Array"
-      //     })
-      //   } else {
-      //     this.AdvancedColumnSearchOption.push({ ColumnName: this.Columns.TableColumn[i].ColumnName, Value: "", FilterType: "String" })
-      //   }
-      // }
+
       this.ngZone.onMicrotaskEmpty.first().subscribe(() => {
         $('.sortable').sortable().sortable({
           items: ':not(.disabled)',
           handle: 'i',
         })
       })
-      //   this.GetData()
+
     });
   }
   OnGetDataEvent(event) {
