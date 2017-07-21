@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { UserdataService } from "app/services/userdata.service";
 import { PaginationInstance } from "ngx-pagination/dist/ngx-pagination";
+import { PhisonwipsService } from '../services/phisonwips.service';
 @Component({
   selector: 'app-testable',
   templateUrl: './testable.component.html',
@@ -14,7 +15,7 @@ export class TestableComponent implements OnInit {
   collection = [];
   tabledata: any;
   Columns
-  constructor(private http: UserdataService, private ngZone: NgZone) { }
+  constructor(private http: PhisonwipsService, private ngZone: NgZone) { }
 
   ngOnInit() {
     this.TableSetting = {

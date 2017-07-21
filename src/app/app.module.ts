@@ -10,6 +10,7 @@ import { UserdataService } from './services/userdata.service';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import { TestableComponent } from './testable/testable.component';
+import { PhisonwipsService } from './services/phisonwips.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { TestableComponent } from './testable/testable.component';
     NgxPaginationModule
 
   ],
-  providers: [UserdataService],
+  providers: [UserdataService,PhisonwipsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

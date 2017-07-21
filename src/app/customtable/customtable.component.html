@@ -44,7 +44,19 @@
           <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
         </div>
       </div>
-      <div *ngIf="c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'">
+      <div *ngIf="c.ColumnType=='Integer' || c.ColumnType=='Decimal'">
+        <div class="col">
+          <input [id]="c.ColumnName+'-start'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
+          <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
+        </div>
+        <div class="col">~</div>
+        <div class="col">
+          <input [id]="c.ColumnName+'-End'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
+          <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
+        </div>
+      </div>
+      <!--c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'  -->
+      <div *ngIf="c.ColumnType=='String'">
         <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" (keyup)="OnKeyUpAdvColSearch()">
         <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
       </div>
