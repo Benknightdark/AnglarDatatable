@@ -44,7 +44,7 @@
           <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
         </div>
       </div>
-      <div *ngIf="c.ColumnType=='Integer' || c.ColumnType=='Decimal'">
+      <div *ngIf="c.ColumnType=='Int32' || c.ColumnType=='Decimal'">
         <div class="col">
           <input [id]="c.ColumnName+'-start'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
           <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
