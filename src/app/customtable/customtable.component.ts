@@ -125,6 +125,7 @@ export class CustomtableComponent implements OnInit {
         }
       }
     }
+   // console.log(this.Columns)
     this.ColumnSettingDragendEvent.emit(this.Columns)//this.Columns.TableColumn
   }
   //CRUD按鈕

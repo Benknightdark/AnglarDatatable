@@ -11,6 +11,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import { TestableComponent } from './testable/testable.component';
 import { PhisonwipsService } from './services/phisonwips.service';
+import {DndModule} from 'ng2-dnd';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { PhisonwipsService } from './services/phisonwips.service';
     HttpModule,
     RouterModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    DndModule.forRoot()
 
   ],
   providers: [UserdataService,PhisonwipsService],

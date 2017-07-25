@@ -3,17 +3,35 @@
 <div class="modal modal-fixed-footer">
   <div class="modal-content">
     <h4>欄位設定</h4>
-    <ul class="sortable">
+     <ul class="sortable">
       <li *ngFor="let column of Columns?.TableColumn" [class.disabled]="!column.IsVisible" [id]="column.ColumnName" (dragend)="ColumnSettingDragend($event)">
         <i class="material-icons">drag_handle</i>
         <input type="checkbox" [id]="column.SortSeq" [(ngModel)]="column.IsVisible" (change)="ColumnSettingChanged()" />
         <label [for]="column.SortSeq">   {{column.ColumnTitle}}</label>
       </li>
     </ul>
+
+    <!-- <div class="panel panel-success">
+
+      <div class="panel-body">
+        <ul class="list-group" dnd-sortable-container [sortableData]="Columns?.TableColumn">
+          <li *ngFor="let column of Columns?.TableColumn; let i = index" [class.disabled]="!column.IsVisible" class="list-group-item"
+            dnd-sortable [sortableIndex]="i" [id]="column.ColumnName"
+
+            >
+            <input type="checkbox" [id]="column.SortSeq" [(ngModel)]="column.IsVisible" (change)="ColumnSettingChanged()"
+            />
+            <label [for]="column.SortSeq">   {{column.ColumnTitle}}</label>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
   </div>
   <div class="modal-footer">
     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">關閉</a>
   </div>
+
 </div>
 <!--KeyWord Search-->
 <div class="row">
@@ -32,44 +50,46 @@
 <!--AdvancedColumnSearchForm-->
 <div class="row" *ngIf="ShowAdvancedColumnSearch">
   <div *ngFor="let c of Columns?.TableColumn;let i=index" class="input-field col " [class.s3]="ScreenWidth>1700" [class.s12]="ScreenWidth<1700">
-    <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
-      <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
-        <div class="col">
-          <input [id]="c.ColumnName+'-start'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
-          <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
-        </div>
-        <div class="col">~</div>
-        <div class="col">
-          <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
-          <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
-        </div>
-      </div>
-      <div *ngIf="c.ColumnType=='Int32' || c.ColumnType=='Decimal'">
-        <div class="col">
-          <input [id]="c.ColumnName+'-start'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
-          <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
-        </div>
-        <div class="col">~</div>
-        <div class="col">
-          <input [id]="c.ColumnName+'-End'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
-          <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
-        </div>
-      </div>
-      <!--c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'  -->
-      <div *ngIf="c.ColumnType=='String'">
-        <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" (keyup)="OnKeyUpAdvColSearch()">
-        <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
-      </div>
-    </div>
-    <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
-      <!--class="browser-default"-->
-      <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]" [name]="c.ColumnName" (change)="OnChangeAdvColSearch()">
-      <option value=""  selected></option>
-      <option *ngFor="let item of Columns.AdvancedColumnSearchOptions[c.ColumnName]" [value]="item" >{{item}}</option>
-    </select>
-      <label> {{c.ColumnTitle}}</label>
-    </div>
 
+      <div *ngIf="CheckAdvancedSearch(c.ColumnName)">
+        <div *ngIf="c.ColumnType=='Date' || c.ColumnType=='DateTime'">
+          <div class="col">
+            <input [id]="c.ColumnName+'-start'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
+            <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
+          </div>
+          <div class="col">~</div>
+          <div class="col">
+            <input [id]="c.ColumnName+'-End'" type="date" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
+            <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
+          </div>
+        </div>
+        <div *ngIf="c.ColumnType=='Int32' || c.ColumnType=='Decimal'">
+          <div class="col">
+            <input [id]="c.ColumnName+'-start'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['Start']" (change)="OnChangeAdvColSearch()">
+            <label class="active" [for]="c.ColumnName+'-start'">{{c.ColumnTitle}}</label>
+          </div>
+          <div class="col">~</div>
+          <div class="col">
+            <input [id]="c.ColumnName+'-End'" type="number" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']['End']" (change)="OnChangeAdvColSearch()">
+            <label class="active" [for]="c.ColumnName+'-End'">{{c.ColumnTitle}}</label>
+          </div>
+        </div>
+        <!--c.ColumnType!='Boolean'&&c.ColumnType!='Date'&&c.ColumnType!='DateTime'  -->
+        <div *ngIf="c.ColumnType=='String'">
+          <input [id]="c.ColumnTitle" type="text" [(ngModel)]="AdvancedColumnSearchOption[i]['Value']" (keyup)="OnKeyUpAdvColSearch()">
+          <label class="active" [for]="c.ColumnTitle">{{c.ColumnTitle}}</label>
+        </div>
+      </div>
+      <div *ngIf="!CheckAdvancedSearch(c.ColumnName)">
+        <!--class="browser-default"-->
+        <select [(ngModel)]="AdvancedColumnSearchOption[c.ColumnName]"
+         [name]="c.ColumnName" (change)="OnChangeAdvColSearch()">
+            <option value=""  selected></option>
+            <option *ngFor="let item of Columns.AdvancedColumnSearchOptions[c.ColumnName]"
+            [value]="item" >{{item}}</option>
+      </select>
+        <label> {{c.ColumnTitle}}</label>
+      </div>
   </div>
   <!--{{AdvancedColumnSearchOption|json}}-->
 </div>
